@@ -1,0 +1,197 @@
+/*
+	
+	Color Palette - https://coolors.co/e8554e-222222-353535-cccccc-ffffff
+	
+	#e8554e 
+	#222
+	#353535
+	#ccc
+	
+	#eee
+
+	#fff
+
+
+	Fonts
+
+	Oswald - Header
+	Droid Sans - Body
+
+*/
+
+/*FontAwesome*/
+@import url('../fonts/font-awesome-4.7.0/css/font-awesome.min.css');
+
+/*Oswald*/
+@font-face {
+  font-family: "Oswald";
+  src: url("../fonts/Oswald/Oswald-Regular.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("../fonts/Oswald/Oswald-Bold.ttf");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("../fonts/Oswald/Oswald-Light.ttf");
+  font-weight: 300;
+}
+/*Roboto*/
+@font-face {
+  font-family: "Droid Sans";
+  src: url("../fonts/Droid_Sans/DroidSans.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Droid Sans";
+  src: url("../fonts/Droid_Sans/DroidSans-Bold.ttf");
+  font-weight: 700;
+}
+
+
+body {
+	font-family: "Droid Sans", sans-serif;
+}
+
+h1,h2,h3 {
+	font-family: "Oswald", sans-serif;
+}
+
+.navbar-brand, .navbar-brand:hover, .navbar-brand:visited{
+	color: #e8554e;
+}
+
+.navbar-brand:hover {
+	text-decoration: underline;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+	background-color: #e8554e;
+	border-color: #e7544d;
+	color: #fff;
+}
+
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+
+
+	background-color: #222;
+	color: #fff;
+}
+
+.jumbotron {
+	padding-top: 10px;
+
+	background-color: #222;
+	color: #fff;
+}
+
+/* Search Navbar */
+
+.navbar-search {
+
+}
+
+.navbar-search input[type="search"] {
+	background-image: url('https://digitalsynopsis.com/wp-content/uploads/2014/01/search-icon.png');
+    background-repeat: no-repeat;
+    background-position: 7px 5px;
+    padding-left: 33px;
+    background-color: #353535;
+    border: 2px solid #222;
+    color: #fff;
+    text-transform: none;
+    width: 180px;
+    height: 34px;
+    border-radius: 25px;
+    outline: none;
+}
+
+.navbar-search input[type="submit"] {
+	display: none;
+}
+
+.navbar-search input:focus, .navbar-search input:visited {
+	border: 2px solid #7a7a7a;
+}
+
+/* Search Gazeetter */
+
+.gazetteer-search input[type="text"]:focus {
+	border-color: #e8554e;
+}
+
+
+
+/* ABC filter */
+
+.alphabet-filter {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.alphabet-filter span {
+	padding: 0 10px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.alphabet-filter .active {
+	color: #fff;
+	background-color: #353535;
+	border-radius: 30px;
+	text-decoration: underline;
+	text-transform: uppercase;
+}
+
+
+/* ABC results */
+
+.major-letter {
+	font-size: 60px;
+	border-bottom: 1px solid #222;
+}
+
+.letter-count {
+	font-family: "Droid Sans", sans-serif;
+	font-weight: normal;
+	font-size: 14px;
+	color: #353535;
+}
+
+.abc-results {
+
+}
+
+.abc-results>div {
+
+}
+
+.abc-results>div h2 {
+	margin-top: 5px;
+}
+
+.abc-results>div h2:after {
+	content: ".";
+	color: #e8554e;
+	font-family: "Droid Sans", sans-serif;
+	font-size: 32px;
+}
+
+.abc-results>div h3 {
+	color: #7a7a7a;
+	margin-top: 20px;
+	margin-bottom: 5px;
+	font-size: 22px;
+}
+
+.abc-results>div span {
+	color: #7a7a7a;
+	font-family: "Droid Sans", sans-serif;
+	font-weight: normal;
+	font-size: 14px;
+	margin-right: 5px;
+}
