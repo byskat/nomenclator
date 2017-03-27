@@ -79,4 +79,17 @@ class Db {
     $connection = $this -> connect();
     return "'" . $connection -> real_escape_string($value) . "'";
   }
+
+  /**
+   * Quote and escape value and adds an affix for use in a database query
+   *
+   * @param string $prefix Added before value
+   * @param string $value The value to be quoted and escaped and affixed
+   * @param string $suffix Added after value
+   * @return string The quoted and escaped string
+   */
+  public function affix($prefix, $value, $suffix) {
+    $value = str_replace("'", "", $value);
+    return "'".$prefix.$value.$suffix."'";
+  }
 }

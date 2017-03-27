@@ -16,6 +16,21 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="resources/css/main-style.css">
 
+  <?php 
+    //Pagination work using session
+    session_start(); 
+
+    $pages = 10;
+    $page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
+      'options' => array(
+        'default'  => 1,
+        'min_range' => 1,
+      ),
+    )));
+
+    $_SESSION['page'] = $page;
+  ?>
+
 </head>
 <body>
   <nav class="navbar">
@@ -57,12 +72,12 @@
     <div class="row">     
       <div class="col-md-12">
 
-        <form id="search-form" class="gazetteer-search" itemscope="" method="get" action="" role="search">
+        <form id="search-form" class="gazetteer-search" itemscope="" method="post" action="" role="search">
           <span class="fa fa-search gazetteer-icon-search"></span>
           <button id="filter-button" type="button" class="fa fa-sliders gazetteer-icon-filter" data-toggle="popover"></button>
           <div class="tagsinput-container">
-            <input id="tagsinput" class="bootstrap-tagsinput" type="text" name="t" data-role="tagsinput" placeholder="Cerca general de carrers ..." />
-            <input id="queryinput" type="text" name="q" style="display: none;">
+            <input id="tagsinput" class="bootstrap-tagsinput" type="text" name="q" data-role="tagsinput" placeholder="Cerca general de carrers ..." />
+            <input id="queryinput" type="text" name="t" style="display: none;">
           </div>
           <input type="submit" value="Search">
         </form>
@@ -72,13 +87,13 @@
 
     <div class="row">
       <div class="col-md-12">
-        <form id="abc-form" class="alphabet-filter" itemscope="" method="get" action="" role="search">
+        <form id="abc-form" class="alphabet-filter" itemscope="" method="post" action="" role="search">
           <?php
             $abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','Tots'];
             $arr_length = count($abc);
             $temp = '';
 
-            if (isset($_GET['a'])) $temp = $_GET['a'];
+            if (isset($_POST['a'])) $temp = $_POST['a'];
 
             for($i=0;$i<$arr_length;$i++) {
               if ($temp==$abc[$i]) {
