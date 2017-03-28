@@ -6,30 +6,11 @@
   <meta name="description" content="" />
   <meta name="keywords" content="" />
   <meta name="robots" content="index,follow" />
-  
-  <!--<script type="text/javascript" src="resources/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-  <script type="text/javascript" src="resources/vendor/typeahead.bundle.js"></script>
-  <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css">-->
 
   <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="resources/css/main-style.css">
-
-  <?php 
-    //Pagination work using session
-    session_start(); 
-
-    $pages = 10;
-    $page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
-      'options' => array(
-        'default'  => 1,
-        'min_range' => 1,
-      ),
-    )));
-
-    $_SESSION['page'] = $page;
-  ?>
 
 </head>
 <body>
@@ -68,11 +49,10 @@
   </div>
 
   <div class="container">
-
+  <form id="search-form" itemscope="" method="get">
     <div class="row">     
       <div class="col-md-12">
-
-        <form id="search-form" class="gazetteer-search" itemscope="" method="post" action="" role="search">
+        <div class="gazetteer-search">
           <span class="fa fa-search gazetteer-icon-search"></span>
           <button id="filter-button" type="button" class="fa fa-sliders gazetteer-icon-filter" data-toggle="popover"></button>
           <div class="tagsinput-container">
@@ -80,40 +60,60 @@
             <input id="queryinput" type="text" name="t" style="display: none;">
           </div>
           <input type="submit" value="Search">
-        </form>
-
+        </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
-        <form id="abc-form" class="alphabet-filter" itemscope="" method="post" action="" role="search">
+        <div class="alphabet-filter">
           <?php
             $abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','Tots'];
             $arr_length = count($abc);
             $temp = '';
 
-            if (isset($_POST['a'])) $temp = $_POST['a'];
+            if (isset($_GET['a'])) $temp = $_GET['a'];
 
             for($i=0;$i<$arr_length;$i++) {
               if ($temp==$abc[$i]) {
-                echo "<span class='active'><input type='radio' name='a' value='".$abc[$i]."' cheked='cheked'>".$abc[$i]."</span>"; 
+                echo "<span class='active'><input type='radio' name='a' value='".$abc[$i]."' cheked='cheked'>".$abc[$i]."</span>\n"; 
               } else {
-                echo "<span><input type='radio' name='a' value='".$abc[$i]."'>".$abc[$i]."</span>"; 
+                echo "<span><input type='radio' name='a' value='".$abc[$i]."'>".$abc[$i]."</span>\n"; 
               }
             }
           ?>
-        </form>
+        </div>
       </div>
     </div>
 
-    <?php require_once("resources/php/includes/results.php"); ?>
+    <div class="row">
+      <div class="col-md-12">
+        <section id="A">
+          <h1 class="major-letter"><span id="q">A</span> <span class="letter-count"><span id="num">?</span> resultats </span></h1>
+
+    <nav class="text-center">
+      <ul class="pagination custom-pagination">
+        <li class="page-item"><button id="first" class="page-link"><<</button></li>
+        <li class="page-item"><button id="prev" class="page-link"><</button></li>
+        <li class="page-item"><button id="stat" class="page-link">1 de 1</button></li>
+        <li class="page-item"><button id="next" class="page-link">></button></li>
+        <li class="page-item"><button id="last" val="1" class="page-link">>></button></li>
+      </ul>
+    </nav>
+
+        </section>
+      </div>
+    </div>
+
+    <div id="resultsContainer" class="row abc-results"></div>
 
     <hr>
 
     <footer>
       <p>© 2017 Ajuntament de Girona.</p>
     </footer>
+    <input id="pag" type="hidden" readonly="readonly" name="pag" value="1">
+  </form>
   </div> <!-- /container -->
 
   <script type="text/javascript" src="resources/vendor/jquery-3.1.1.min.js"></script>

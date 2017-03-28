@@ -50,6 +50,6 @@ Temporary Items
 # Project
 # =========================
 
-.interesting-vendors.txt
+*.txt
 bkup
 resources/php/*.ini
