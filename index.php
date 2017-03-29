@@ -88,24 +88,37 @@
 
     <div class="row">
       <div class="col-md-12">
-        <section id="A">
-          <h1 class="major-letter"><span id="q">A</span> <span class="letter-count"><span id="num">?</span> resultats </span></h1>
+        <section class="abc-header">
+          <div class="col-md-6 no-padding">
+            <h1 class="major-letter"><span id="q">A</span> <span class="letter-count"><span id="num">?</span> resultats </span></h1>
+          </div>
 
-    <nav class="text-center">
-      <ul class="pagination custom-pagination">
-        <li class="page-item"><button id="first" class="page-link"><<</button></li>
-        <li class="page-item"><button id="prev" class="page-link"><</button></li>
-        <li class="page-item"><button id="stat" class="page-link">1 de 1</button></li>
-        <li class="page-item"><button id="next" class="page-link">></button></li>
-        <li class="page-item"><button id="last" val="1" class="page-link">>></button></li>
-      </ul>
-    </nav>
+          <nav id="paginator" class="text-right col-md-6 no-padding">
+            <ul class="pagination custom-pagination">
+              <li class="page-item"><button id="first" class="page-link"><<</button></li>
+              <li class="page-item"><button id="prev" class="page-link"><</button></li>
+              <li class="page-item"><button id="stat" class="page-link">1 de 1</button></li>
+              <li class="page-item"><button id="next" class="page-link">></button></li>
+              <li class="page-item"><button id="last" val="1" class="page-link">>></button></li>
+            </ul>
+          </nav>
 
+          <div style="clear: both;"></div>
         </section>
       </div>
     </div>
 
     <div id="resultsContainer" class="row abc-results"></div>
+
+    <nav id="test" class="text-center col-md-12 no-padding">
+      <ul class="pagination custom-pagination">
+        <li class="page-item"><button class="first page-link"><<</button></li>
+        <li class="page-item"><button class="prev page-link"><</button></li>
+        <li class="page-item"><button class="stat page-link">1 de 1</button></li>
+        <li class="page-item"><button class="next page-link">></button></li>
+        <li class="page-item"><button class="last page-link">>></button></li>
+      </ul>
+    </nav>
 
     <hr>
 

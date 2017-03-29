@@ -57,6 +57,13 @@ body
 h1, h2, h3
   font-family: "Oswald", sans-serif
 
+/* Helper classes */
+
+.no-padding 
+  padding: 0
+
+/* Bootstrap overide */
+
 .navbar-brand
   color: #e8554e
   &:hover, &:visited
@@ -118,6 +125,12 @@ h1, h2, h3
     padding: 0 10px
     cursor: pointer
     font-size: 16px
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
   input[type=radio]
     display: none
   .active, 
@@ -129,10 +142,14 @@ h1, h2, h3
 
 /* ABC results */
 
+.abc-header
+  border-bottom: 1px solid #222
+
 .major-letter
   font-size: 60px
   text-transform: capitalize
-  border-bottom: 1px solid #222
+  margin-bottom: 0
+  //border-bottom: 1px solid #222
 
 .letter-count
   font-family: "Droid Sans", sans-serif
@@ -169,33 +186,56 @@ h1, h2, h3
       font-size: 14px
       margin-right: 5px
 
+.no-items
+  margin: 10px 0
 
-.pagination > li
-  &:first-child > button
-    margin-left: 0
-    border-top-left-radius: 4px
-    border-bottom-left-radius: 4px
-  &:last-child > button
-    margin-right: 0
-    border-top-right-radius: 4px
-    border-bottom-right-radius: 4px
-  > button
-    position: relative
-    float: left
-    height: 34px
-    padding: 6px 12px
-    margin-left: -1px
-    line-height: 1.42857143
-    color: #222
-    border-color: #eee
-    text-decoration: none
-    background-color: #fff
-    border: 1px solid #ddd
-    outline: none
-    &:hover, &:focus
-      z-index: 2
+.custom-pagination 
+  margin: 30px 0 10px 0
+  > li
+    &:first-child > button
+      margin-left: 0
+      border-top-left-radius: 4px
+      border-bottom-left-radius: 4px
+    &:last-child > button
+      margin-right: 0
+      border-top-right-radius: 4px
+      border-bottom-right-radius: 4px
+    > button
+      position: relative
+      float: left
+      height: 34px
+      padding: 6px 12px
+      margin-left: -1px
+      line-height: 1.42857143
       color: #222
-      background-color: #eee
-      border-color: #ddd 
-    &.disabled
+      border-color: #eee
+      text-decoration: none
+      background-color: #fff
+      border: 1px solid #ddd
+      outline: none
+      -webkit-touch-callout: none
+      -webkit-user-select: none
+      -khtml-user-select: none
+      -moz-user-select: none
+      -ms-user-select: none
+      user-select: none
+      &:hover
+        z-index: 2
+        color: #222
+        background-color: #eee
+        border-color: #ddd 
+      &.disabled
+        cursor: default
+        background-color: #ddd
+
+
+button.disabled
+  &, &:hover, &:focus
+    cursor: default
+    background-color: #ddd
+
+.disabled 
+  ul > li > button
+    &, &:hover, &:focus
+      cursor: default
       background-color: #ddd

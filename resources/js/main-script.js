@@ -56,27 +56,64 @@ function updateGazetteer(request, form) {
 
   // Callback handler that will be called on success
   request.done(function (response, textStatus, jqXHR){
-    response = JSON.parse(response);
-
+    
+    try {
+      response = JSON.parse(response);  
+    }
+    catch (e) {
+      return false;
+    }
+    
     $('#q').text(response['q']);
     $('#num').text(response['num']);
 
     html = '';
-    response['res'].forEach(function(item) {
-      date = new Date(item['_date_modified']);
 
-      html += '<div class="item col-md-4">';
-      html += '<h3>'+item['nom_tip_comple']+'</h3>';
-      html += '<h2>'+item['nom_tip_comple']+'</h2>';
-      html += '<p><span>'+date.getFullYear()+'</span>';
-      html += 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.';
-      html += '</p><p><a class="btn btn-default" href="#" role="button">Més detalls »</a></p>'
-      html += '</div>';
-      
-    });
+    if(!response['num']) {
+      html += '<div class="col-md-12"><p class="no-items">No hi ha resultats.</p></div>';
+    } else {
+      response['res'].forEach(function(item) {
+        date = new Date(item['_date_modified']);
+
+        html += '<div class="item col-md-4">';
+        html += '<h3>'+item['nom_tip_comple']+'</h3>';
+        html += '<h2>'+item['nom_tip_comple']+'</h2>';
+        html += '<p><span>'+date.getFullYear()+'</span>';
+        html += 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.';
+        html += '</p><p><a class="btn btn-default" href="#" role="button">Més detalls »</a></p>'
+        html += '</div>';
+      });
+    }
     $('#resultsContainer').html(html);
 
+    // Total disabler
+    if(response['lim']<=1) {
+      $('#paginator').addClass('disabled');
+      $('#paginator').find('button').attr('disabled', true);
+    } else {
+      $('#paginator').removeClass('disabled');
+      $('#paginator').find('button').attr('disabled', false);
+    }
+
+    // Partial Disabler
+    if(response['pag']==response['lim']) {
+      $('#next, #last').addClass('disabled');
+      $('#next, #last').attr('disabled', true);
+    } else {
+      $('#next, #last').removeClass('disabled');
+      $('#next, #last').attr('disabled', false);
+    }
+
+    if(response['pag']==1) {
+      $('#prev, #first').addClass('disabled');
+      $('#prev, #first').attr('disabled', true);
+    } else {
+      $('#prev, #first').removeClass('disabled');
+      $('#prev, #first').attr('disabled', false);
+    }
+
     $('#stat').text(response['pag']+' de '+response['lim']);
+    $('#stat').attr('disabled', true);
     $('#last').val(response['lim']);
 
     console.log(response);
@@ -151,11 +188,11 @@ $('input[type="radio"]').click(function(e) {
 });
 
 
-//test pagination
+// Pagination
 
   function add() {
     var val = +$("#pag").val() + 1;
-    $("#pag").val(val);
+    if(val<=$("#last").val()) $("#pag").val(val);
   }
   
   function sub() {
@@ -193,4 +230,53 @@ $('#tagsinput').keypress(function (e) {
   if (e.which == 13) {
     paginationReset();
   }
+});
+
+
+function paginator(element, hidden, limit) {
+  // selector with nav container
+  this.element = element;
+  // selector with hidden input with page valor
+  this.hidden = hidden;
+  // page valor
+  this.current = $(this.hidden).val();
+  // max number of valors
+  this.limit = limit;
+
+  // nav local selectors (create them with draw function?)
+  this.first = element + " .first";
+  this.prev = element + " .prev";
+  this.stat = element + " .stat";
+  this.next = element + " .next";
+  this.last = element + " .last";
+
+  this.add = function() {
+    if(this.current <= $(this.last).val()) this.apply(this.current+1);
+    console.log(this.last);
+    console.log("Current: "+this.current);
+  }
+
+  this.sub = function() {
+    if(this.current>0) this.apply(this.current--);
+    console.log("prev");
+  }
+
+
+  this.click = function(e) {
+    if ($(e['currentTarget']).hasClass('next')) this.add();
+    if ($(e['currentTarget']).hasClass('prev')) this.sub();
+    //console.log(e['currentTarget']);
+    //console.log($(e).attr('class'));
+  }
+
+  this.apply = function(newValor) {
+    console.log(newValor);
+    $(this.hidden).val(newValor);
+  }
+}
+
+var testPag = new paginator("#test", "#pag", 10);
+
+$('#test').on('click', 'button', function(e){
+  testPag.click(e);
 });

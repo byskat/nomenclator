@@ -27,7 +27,7 @@
   }
 
   $totalItems = $db->single();
-  $totalItems = $totalItems['count'];
+  $totalItems = intval($totalItems['count']);
 
   // How many items to list per page
   $limit = 18;
@@ -61,6 +61,8 @@
   if(!isset($rows)) {
     $rows = [];
   }
+
+
 
   // Seting up associative array with response
   $response = [
@@ -100,9 +102,8 @@
     // Bind the query params
     $db->bind(':limit', $limit);
     $db->bind(':offset', $offset);
-    $rows = $db->resultSet();
     
+    $rows = $db->resultSet();
+
     return $rows;
   }
-
-  //if($db->getLastError()) var_dump($db->getLastError());
