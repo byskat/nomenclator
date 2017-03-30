@@ -1,23 +1,67 @@
-
+//TAG popover
 $(function () {
-  var content = "<button id='20' value='via' type='button' class='tag filter-tag label label-primary' onClick='addTag(this)'>Jardí</button>";
-  
-  var options = {
+  /*
+  var content = "<button value='via' type='button' class='tag filter-tag label label-primary' onClick='addTag(this)'>Jardí</button>";
+  */
+
+  $('#filter-button').popover({
     'title': 'Filtre',
-    'content': content,
+    'content': 'Carregant...',
     'html': true,
     'placement': 'bottom'
-  };
+  });
 
-  $('#filter-button').popover(options);
-
+  loadTags($('#filter-button'));
+  
   $('#filter-button').on('click', function () {
     $(this).toggleClass('active');
   });
-
+  
+  $('.gazetteer-search button').on('click', function(){
+    console.log(this);
+  });
 
   $('[data-toggle="popover"]').popover();
 });
+
+function loadTags(popover) {
+  var requestTags;
+
+  // Abort any pending request
+  if (requestTags) {
+      requestTags.abort();
+  }
+
+  requestTags = $.ajax({
+      url: "resources/php/tagServer.php",
+      type: "get"
+  });
+
+  // Callback handler that will be called on success
+  requestTags.done(function (response, textStatus, jqXHR){
+    response = JSON.parse(response);
+
+    html = '';
+    response.forEach(function(item) {
+      html += '<input type="radio" id="t" ';
+      html += 'class="filter-tag label label-primary" ';
+      html += 'value="'+item['codi_tipus_via']+'">';
+    });
+
+    popover = popover.attr('data-content',html).data('bs.popover');
+    popover.setContent();
+
+    console.log(response);
+  });
+
+  requestTags.fail(function (jqXHR, textStatus, errorThrown){
+      // Log the error to the console
+      console.error(
+          "LOADTAGS | The following error occurred: "+
+          textStatus, errorThrown
+      );
+  });
+}
 
 // SEARCH FORM
 function updateGazetteer(request, form) {
@@ -56,7 +100,7 @@ function updateGazetteer(request, form) {
 
   // Callback handler that will be called on success
   request.done(function (response, textStatus, jqXHR){
-    
+
     try {
       response = JSON.parse(response);  
     }
@@ -73,12 +117,15 @@ function updateGazetteer(request, form) {
       html += '<div class="col-md-12"><p class="no-items">No hi ha resultats.</p></div>';
     } else {
       response['res'].forEach(function(item) {
-        date = new Date(item['_date_modified']);
+        (item['data_variacio']===null)? date = 'S.R.' : date = new Date(item['data_variacio']).getFullYear();
+        (item['nexe']===null)? nexe = '' : nexe = item['nexe'];
+
+        tipusVia = item['nom_composat'].split(' ')[0];
 
         html += '<div class="item col-md-4">';
-        html += '<h3>'+item['nom_tip_comple']+'</h3>';
-        html += '<h2>'+item['nom_tip_comple']+'</h2>';
-        html += '<p><span>'+date.getFullYear()+'</span>';
+        html += '<h3>'+tipusVia+' '+nexe+'</h3>';
+        html += '<h2>'+item['nom_variant_curt']+'</h2>';
+        html += '<p><span>'+date+'</span>';
         html += 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.';
         html += '</p><p><a class="btn btn-default" href="#" role="button">Més detalls »</a></p>'
         html += '</div>';
@@ -123,7 +170,7 @@ function updateGazetteer(request, form) {
   request.fail(function (jqXHR, textStatus, errorThrown){
       // Log the error to the console
       console.error(
-          "The following error occurred: "+
+          "UPDATEGAZETTEER | The following error occurred: "+
           textStatus, errorThrown
       );
   });

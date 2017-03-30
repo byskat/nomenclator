@@ -2,32 +2,14 @@
 
   require_once("postgre.class.php");
 
-  $db = new Db("nomenclator.ini");
+  $db = new Db("web_umat_nomenclator.ini");
 
 	//Check sent variables and escape strings.
 	isset($_GET['q']) && !empty($_GET['q'])? $query = $_GET['q'] : $query = null;
 	isset($_GET['t']) && !empty($_GET['t'])? $tags = $_GET['t'] : $tags = null;
 	isset($_GET['a']) && !empty($_GET['a'])? $abc = $_GET['a'] : $abc = null;
-  
-  // Find out how many items are in the table
-  if($query==null && $tags==null && $abc==null) {
-    $db->query("SELECT COUNT(*) FROM etrs89.eixos_viaris_unic WHERE LOWER(nom_tip_comple) LIKE 'a%'");
-  } 
-  if($query!==null && $tags==null && $abc==null) {
-    $db->query("SELECT COUNT(*) FROM etrs89.eixos_viaris_unic WHERE LOWER(nom_tip_comple) LIKE LOWER(:query)");
-    $db->bind(":query", $query.'%');
-  }
-  if($abc!==null) {
-    if ($abc=='Tots') {
-      $db->query("SELECT COUNT(*) FROM etrs89.eixos_viaris_unic WHERE nom_tip_comple IS NOT NULL AND TRIM(nom_tip_comple) <> ''");
-    } else {
-      $db->query("SELECT COUNT(*) FROM etrs89.eixos_viaris_unic WHERE LOWER(nom_tip_comple) LIKE :abc");
-      $db->bind(":abc", $abc.'%');
-    }
-  }
 
-  $totalItems = $db->single();
-  $totalItems = intval($totalItems['count']);
+  $totalItems = countData($db, $query, $tags, $abc);
 
   // How many items to list per page
   $limit = 18;
@@ -62,8 +44,6 @@
     $rows = [];
   }
 
-
-
   // Seting up associative array with response
   $response = [
     "q"   => $q,
@@ -77,24 +57,56 @@
   // Json encode and echo
   echo json_encode($response);
 
+
+  function countData($db, $query, $tags, $abc) {
+
+    $table = "carrerer_1";
+    $field1 = "nom_normalitzat";
+
+    // Find out how many items are in the table
+    if($query==null && $abc==null) {
+      $db->query("SELECT COUNT(*) FROM $table WHERE LOWER($field1) LIKE 'a%'");
+    } 
+    if($query!==null && $abc==null) {
+      $db->query("SELECT COUNT(*) FROM $table WHERE tsv @@ plainto_tsquery(:query)");
+        //LOWER($field1) LIKE LOWER(:query)
+      $db->bind(":query", $query.'%');
+    }
+    if($abc!==null) {
+      if ($abc=='Tots') {
+        $db->query("SELECT COUNT(*) FROM $table WHERE $field1 IS NOT NULL AND TRIM($field1) <> ''");
+      } else {
+        $db->query("SELECT COUNT(*) FROM $table WHERE LOWER($field1) LIKE :abc");
+        $db->bind(":abc", $abc.'%');
+      }
+    }
+
+    $totalItems = $db->single();
+    return intval($totalItems['count']);
+  }
+
+
   function fetchData($db, $query, $tags, $abc, $limit, $offset) {
-    $fields = "nom_tip_comple, objectid_1, _date_modified";
+    $fields = "*";
+
+    $table = "carrerer_1";
+    $field1 = "nom_normalitzat";
 
     // Case 1: nothing set (default) selects all streets starting with A
-    if($query==null && $tags==null && $abc==null) {
-      $db->query("SELECT $fields FROM etrs89.eixos_viaris_unic WHERE LOWER(nom_tip_comple) LIKE 'a%' ORDER BY nom_tip_comple LIMIT :limit OFFSET :offset");
+    if($query==null && $abc==null) {
+      $db->query("SELECT $fields FROM $table WHERE LOWER($field1) LIKE 'a%' ORDER BY $field1 LIMIT :limit OFFSET :offset");
     } 
     // Case 2: query set (basic search) search in table without tag filtering -> extend to optional tag input
-    if($query!==null && $tags==null && $abc==null) {
-      $db->query("SELECT $fields FROM etrs89.eixos_viaris_unic WHERE LOWER(nom_tip_comple) LIKE LOWER(:query) ORDER BY nom_tip_comple LIMIT :limit OFFSET :offset");
+    if($query!==null && $abc==null) {
+      $db->query("SELECT $fields FROM $table WHERE tsv @@ plainto_tsquery(:query) ORDER BY $field1 LIMIT :limit OFFSET :offset");
       $db->bind(":query", $query.'%');
     }
     // Case 3: abc selected, in that case is mandatory. If "Tots", get all table.
     if($abc!==null) {
       if ($abc=='Tots') {
-        $db->query("SELECT $fields FROM etrs89.eixos_viaris_unic WHERE nom_tip_comple IS NOT NULL AND TRIM(nom_tip_comple) <> '' ORDER BY nom_tip_comple LIMIT :limit OFFSET :offset");
+        $db->query("SELECT $fields FROM $table WHERE $field1 IS NOT NULL AND TRIM($field1) <> '' ORDER BY $field1 LIMIT :limit OFFSET :offset");
       } else {
-        $db->query("SELECT $fields FROM etrs89.eixos_viaris_unic WHERE LOWER(nom_tip_comple) LIKE :abc ORDER BY nom_tip_comple LIMIT :limit OFFSET :offset");
+        $db->query("SELECT $fields FROM $table WHERE LOWER($field1) LIKE :abc ORDER BY $field1 LIMIT :limit OFFSET :offset");
         $db->bind(":abc", $abc.'%');
       }
     }
@@ -103,7 +115,5 @@
     $db->bind(':limit', $limit);
     $db->bind(':offset', $offset);
     
-    $rows = $db->resultSet();
-
-    return $rows;
+    return $db->resultSet();
   }

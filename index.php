@@ -57,7 +57,7 @@
           <button id="filter-button" type="button" class="fa fa-sliders gazetteer-icon-filter" data-toggle="popover"></button>
           <div class="tagsinput-container">
             <input id="tagsinput" class="bootstrap-tagsinput" type="text" name="q" data-role="tagsinput" placeholder="Cerca general de carrers ..." />
-            <input id="queryinput" type="text" name="t" style="display: none;">
+            <input id="queryinput" type="hidden" name="t">
           </div>
           <input type="submit" value="Search">
         </div>
