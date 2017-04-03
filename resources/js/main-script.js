@@ -1,27 +1,13 @@
 //TAG popover
 $(function () {
-  /*
-  var content = "<button value='via' type='button' class='tag filter-tag label label-primary' onClick='addTag(this)'>Jardí</button>";
-  */
-
-  $('#filter-button').popover({
-    'title': 'Filtre',
-    'content': 'Carregant...',
-    'html': true,
-    'placement': 'bottom'
-  });
 
   loadTags($('#filter-button'));
   
   $('#filter-button').on('click', function () {
     $(this).toggleClass('active');
+    $('#tag-popover').stop().slideToggle("500", "linear", "true");
   });
   
-  $('.gazetteer-search button').on('click', function(){
-    console.log(this);
-  });
-
-  $('[data-toggle="popover"]').popover();
 });
 
 function loadTags(popover) {
@@ -41,17 +27,18 @@ function loadTags(popover) {
   requestTags.done(function (response, textStatus, jqXHR){
     response = JSON.parse(response);
 
+    filterArray = [];
     html = '';
-    response.forEach(function(item) {
-      html += '<input type="radio" id="t" ';
-      html += 'class="filter-tag label label-primary" ';
+    response.forEach(function(item) {      
+      html += '<span class="tag" onClick="tagActivation(this)">'
+      html += '<input type="radio" name="t" ';
       html += 'value="'+item['codi_tipus_via']+'">';
+      html += item['nom_tag']+'</span>';
+
+      filterArray[item['codi_tipus_via']] = item['nom_tag'];
     });
 
-    popover = popover.attr('data-content',html).data('bs.popover');
-    popover.setContent();
-
-    console.log(response);
+    $('#tag-popover .popover-content').append(html);
   });
 
   requestTags.fail(function (jqXHR, textStatus, errorThrown){
@@ -103,6 +90,7 @@ function updateGazetteer(request, form) {
 
     try {
       response = JSON.parse(response);  
+      console.log(response);
     }
     catch (e) {
       return false;
@@ -110,6 +98,11 @@ function updateGazetteer(request, form) {
     
     $('#q').text(response['q']);
     $('#num').text(response['num']);
+
+    if(response['tag']) {
+      $('.filterSymbol').text('+');
+      $('#tag').text(filterArray[response['tag']]);
+    }
 
     html = '';
 
@@ -163,7 +156,6 @@ function updateGazetteer(request, form) {
     $('#stat').attr('disabled', true);
     $('#last').val(response['lim']);
 
-    console.log(response);
   });
 
   // Callback handler that will be called on failure
@@ -206,6 +198,7 @@ $("#search-form").submit(function(event){
 $(document).ready(function() {
   updateGazetteer(request);
   $('.alphabet-filter span').first().addClass('active');
+  $('.alphabet-filter span').find('input[type="radio"]').first().attr('checked', true);
 });
 
 /* Alphabet clicable text */
@@ -231,9 +224,33 @@ $('.alphabet-filter span').click(function(e) {
 });
 
 $('input[type="radio"]').click(function(e) {
-  e.stopPropagation();
+  //e.stopPropagation();
 });
 
+function tagActivation(elm) {
+  //Get all sibling tags
+  siblings = $(elm).siblings();
+  
+  //Remove active
+  siblings.removeClass('active');
+
+  // Find previus checked item
+  $(siblings).find('input').attr('checked', false);
+
+  // Find new checkbox to be checked
+  $(elm).find('input[type="radio"]').attr('checked', true);
+
+  $('#queryinput').val($(elm).find('input').val());
+
+  // Add active cisuals to current cheked span
+  $(elm).addClass('active');
+
+  //Reset pagination
+  paginationReset();
+
+  // Inmediate submit after click
+  $('#search-form').submit();
+}
 
 // Pagination
 

@@ -98,7 +98,12 @@
     } 
     // Case 2: query set (basic search) search in table without tag filtering -> extend to optional tag input
     if($query!==null && $abc==null) {
-      $db->query("SELECT $fields FROM $table WHERE tsv @@ plainto_tsquery(:query) ORDER BY $field1 LIMIT :limit OFFSET :offset");
+      if($tags!=null) {
+        $db->query("SELECT $fields FROM $table WHERE tsv @@ plainto_tsquery(:query) AND tsv_tags @@ plainto_tsquery(:tags) ORDER BY $field1 LIMIT :limit OFFSET :offset");
+        $db->bind(":tags", $tags);
+      } else {
+        $db->query("SELECT $fields FROM $table WHERE tsv @@ plainto_tsquery(:query) ORDER BY $field1 LIMIT :limit OFFSET :offset");
+      }
       $db->bind(":query", $query.'%');
     }
     // Case 3: abc selected, in that case is mandatory. If "Tots", get all table.

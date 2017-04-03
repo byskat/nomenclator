@@ -54,7 +54,16 @@
       <div class="col-md-12">
         <div class="gazetteer-search">
           <span class="fa fa-search gazetteer-icon-search"></span>
-          <button id="filter-button" type="button" class="fa fa-sliders gazetteer-icon-filter" data-toggle="popover"></button>
+          <div class="filter-container" style="position: relative;">
+            <button id="filter-button" type="button" class="fa fa-sliders gazetteer-icon-filter" style="right: 8px;"></button>
+
+            <div id="tag-popover" class="popover fade bottom in" role="tooltip" style="top: -14px; left: inherit; right: 0; display: hidden;">
+              <div class="arrow" style="left: 91%;"></div>
+              <h3 class="popover-title">Filtre</h3>
+              <div class="popover-content"></div>
+            </div>
+          </div>
+
           <div class="tagsinput-container">
             <input id="tagsinput" class="bootstrap-tagsinput" type="text" name="q" data-role="tagsinput" placeholder="Cerca general de carrers ..." />
             <input id="queryinput" type="hidden" name="t">
@@ -90,7 +99,7 @@
       <div class="col-md-12">
         <section class="abc-header">
           <div class="col-md-6 no-padding">
-            <h1 class="major-letter"><span id="q">A</span> <span class="letter-count"><span id="num">?</span> resultats </span></h1>
+            <h1 class="major-letter"><span id="q">A</span> <span class="filterSymbol"></span> <span id="tag"></span> <span class="letter-count"><span id="num">?</span> resultats </span></h1>
           </div>
 
           <nav id="paginator" class="text-right col-md-6 no-padding">
