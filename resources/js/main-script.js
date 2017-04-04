@@ -13,11 +13,6 @@ $(function () {
 function loadTags(popover) {
   var requestTags;
 
-  // Abort any pending request
-  if (requestTags) {
-      requestTags.abort();
-  }
-
   requestTags = $.ajax({
       url: "resources/php/tagServer.php",
       type: "get"
@@ -50,6 +45,61 @@ function loadTags(popover) {
   });
 }
 
+// MODEL LOAD
+function loadModal(elm) {
+  // Abort any pending request
+  if (request) {
+      request.abort();
+  }
+
+  itemId = $(elm).attr('data');
+
+  // Fire off the request to /form.php
+  request = $.ajax({
+      url: "resources/php/viewServer.php",
+      type: "get",
+      data: {'id': itemId}
+  });
+
+  // Callback handler that will be called on success
+  request.done(function (response, textStatus, jqXHR){
+
+    try {
+      response = JSON.parse(response);  
+      console.log(response);
+    }
+    catch (e) {
+      return false;
+    }
+
+    (response['data_variacio']===null)? date = 'Sense registre (S.R.)' : date = new Date(response['data_variacio']).getFullYear();
+    (response['nexe']===null)? nexe = '' : nexe = response['nexe'];
+
+    tipusVia = response['nom_composat'].split(' ')[0];
+    linkMap = 'http://www.girona.cat/planol/?q='+response['nom_composat'];
+
+    $('#view-modal').find('h3').text(tipusVia+' '+nexe);
+    $('#view-modal').find('h2').text(response['nom_variant_curt']);
+    $('#view-modal').find('#extend_map').attr('href',linkMap);
+    $('#view-modal').find('#data_variacio').text(date);
+    $('#view-modal').find('#nom_postal').text(response['nom_postal']);
+    $('#view-modal').find('#tipus_car').text(response['tipus_car']);
+    $('#view-modal').find('#nom_normalitzat').text(response['nom_normalitzat']);
+    $('#view-modal').find('#codi_car').text(response['codi_car']);
+    $('#view-modal').find('#actiu').text(response['actiu']);
+    $('#view-modal').find('iframe').attr('src',linkMap);
+  });
+
+  // Callback handler that will be called on failure
+  request.fail(function (jqXHR, textStatus, errorThrown){
+      // Log the error to the console
+      console.error(
+          "LOADMODAL | The following error occurred: "+
+          textStatus, errorThrown
+      );
+  });
+}
+
 // SEARCH FORM
 function updateGazetteer(request, form) {
 
@@ -63,7 +113,7 @@ function updateGazetteer(request, form) {
   // If form isn't defined means default request
   if (typeof form === 'undefined') {
     // Default inputs
-    serializedData = 'q=&t=&a=&pag=1';
+    serializedData = 'q=&t=&a=a&pag=1';
   } else {
     // Get inputs from form
     var $form = $(form);
@@ -97,11 +147,19 @@ function updateGazetteer(request, form) {
     }
     
     $('#q').text(response['q']);
-    $('#num').text(response['num']);
+
+    if(response['num']==1) {
+      $('#num').text(response['num']+" resultat");  
+    } else {
+      $('#num').text(response['num']+" resultats");
+    }
 
     if(response['tag']) {
       $('.filterSymbol').text('+');
       $('#tag').text(filterArray[response['tag']]);
+    } else {
+      $('.filterSymbol').text('');
+      $('#tag').text('');
     }
 
     html = '';
@@ -120,7 +178,10 @@ function updateGazetteer(request, form) {
         html += '<h2>'+item['nom_variant_curt']+'</h2>';
         html += '<p><span>'+date+'</span>';
         html += 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.';
-        html += '</p><p><a class="btn btn-default" href="#" role="button">Més detalls »</a></p>'
+        html += '</p><p><a class="btn btn-default" href="#" role="button" ';
+        html += 'data-toggle="modal" data-target="#view-modal" ';
+        html += 'data="'+item['codi_car']+'" onClick="loadModal(this)">';
+        html += 'Més detalls »</a></p>';
         html += '</div>';
       });
     }
@@ -227,23 +288,52 @@ $('input[type="radio"]').click(function(e) {
   //e.stopPropagation();
 });
 
+function tagRemove(elm) {
+
+  $('#queryinput').val('');
+  $('#tag-popover').find('input[type="radio"]').attr('checked', false);
+  $('#tag-popover').find('span').removeClass('active');
+
+  $(elm).removeClass('active');
+
+  //Reset pagination
+  paginationReset();
+
+  // Inmediate submit after click
+  $('#search-form').submit();
+}
+
 function tagActivation(elm) {
   //Get all sibling tags
   siblings = $(elm).siblings();
   
   //Remove active
   siblings.removeClass('active');
+  $('#filter-indicator').removeClass('active');
 
-  // Find previus checked item
-  $(siblings).find('input').attr('checked', false);
+  //Uncheck functionality
+  if($(elm).find('input[type="radio"]:checked').length) {
+    //If the same tag is selected, then, uncheck it
+    $(elm).removeClass('active');
 
-  // Find new checkbox to be checked
-  $(elm).find('input[type="radio"]').attr('checked', true);
+    $(elm).find('input[type="radio"]').attr('checked', false);
 
-  $('#queryinput').val($(elm).find('input').val());
+    $('#queryinput').val('');
+  } else {
+    // Find previus checked item
+    $(siblings).find('input').attr('checked', false);
+    
+    // Find new checkbox to be checked
+    $(elm).find('input[type="radio"]').attr('checked', true);
 
-  // Add active cisuals to current cheked span
-  $(elm).addClass('active');
+    $('#queryinput').val($(elm).find('input').val());
+
+    // Add active visuals to current cheked span
+    $(elm).addClass('active');
+
+    // Add active visuals to tag indicator
+    $('#filter-indicator').addClass('active');
+  }
 
   //Reset pagination
   paginationReset();

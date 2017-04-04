@@ -79,6 +79,10 @@
 .gazetteer-search
   .popover
     width: 100%
+  & input[type="submit"]
+    display: none
+  & input[type="text"]:focus
+    border-color: #e8554e    
   .tag
     display: inline-block
     font-family: "Droid Sans"
@@ -86,7 +90,7 @@
     color: #353535
     border-radius: 30px
     margin: 0 6px 6px 0
-    padding: 3px 10px 3px 20px
+    padding: 3px 10px
     position: relative
     cursor: pointer
     -webkit-touch-callout: none
@@ -96,19 +100,14 @@
     -ms-user-select: none
     user-select: none
     input[type="radio"]
+      display: none
       position: absolute
       left: 5px
     &.active
       background-color: #e8554e
       color: #fff
 
-.gazetteer-search input[type="submit"]
-  display: none
-
-.gazetteer-search input[type="text"]:focus
-  border-color: #e8554e
-
-.gazetteer-icon-filter, .gazetteer-icon-search
+.gazetteer-icon-filter, .gazetteer-icon-search, .gazetteer-icon-indicator
   position: absolute
   z-index: 1
   outline: none
@@ -127,11 +126,9 @@
     background-color: #eee
   &.fa
     font-size: 20px
-
-
-.gazetteer-icon-filter.active
-  background-color: #e8554e
-  color: #fff
+  &.active
+    background-color: #e8554e
+    color: #fff
 
 .gazetteer-icon-search
   top: -41px
@@ -139,3 +136,27 @@
   color: #ccc
   &.fa
     font-size: 20px
+
+.gazetteer-icon-indicator
+  border-radius: 30px
+  border: 0
+  height: 25px
+  width: 25px
+  top: -43px
+  right: 47px
+  padding: 0
+  color: #ddd 
+  cursor: auto
+  background-color: initial
+  &:before
+    content: "\f0b0"
+    font-family: FontAwesome
+    font-style: normal
+    font-weight: normal
+    text-decoration: inherit
+  &.active
+    background-color: #e8554e
+    color: #fff
+    cursor: pointer
+    &:hover:before
+      content: "\f00d"

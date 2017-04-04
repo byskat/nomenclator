@@ -65,19 +65,40 @@
 
     // Find out how many items are in the table
     if($query==null && $abc==null) {
-      $db->query("SELECT COUNT(*) FROM $table WHERE LOWER($field1) LIKE 'a%'");
+      if($tags!==null) {
+        $db->query("SELECT COUNT(*) FROM $table WHERE LOWER($field1) LIKE 'a%' AND tsv_tags @@ plainto_tsquery(:tags)");
+        $db->bind(":tags", $tags);
+      } else {
+        $db->query("SELECT COUNT(*) FROM $table WHERE LOWER($field1) LIKE 'a%'");
+      }
     } 
     if($query!==null && $abc==null) {
-      $db->query("SELECT COUNT(*) FROM $table WHERE tsv @@ plainto_tsquery(:query)");
-        //LOWER($field1) LIKE LOWER(:query)
-      $db->bind(":query", $query.'%');
+      if($tags!==null) {
+        $db->query("SELECT COUNT(*) FROM $table WHERE tsv @@ plainto_tsquery(:query) AND tsv_tags @@ plainto_tsquery(:tags)");
+        $db->bind(":query", $query);
+        $db->bind(":tags", $tags);
+      } else {
+        $db->query("SELECT COUNT(*) FROM $table WHERE tsv @@ plainto_tsquery(:query)");
+          //LOWER($field1) LIKE LOWER(:query)
+        $db->bind(":query", $query.'%');
+      }
     }
     if($abc!==null) {
-      if ($abc=='Tots') {
-        $db->query("SELECT COUNT(*) FROM $table WHERE $field1 IS NOT NULL AND TRIM($field1) <> ''");
+      if($tags!==null) {
+        if ($abc=='Tots') {
+          $db->query("SELECT COUNT(*) FROM $table WHERE $field1 IS NOT NULL AND TRIM($field1) <> '' AND tsv_tags @@ plainto_tsquery(:tags)");
+        } else {
+          $db->query("SELECT COUNT(*) FROM $table WHERE LOWER($field1) LIKE :abc AND tsv_tags @@ plainto_tsquery(:tags)");
+          $db->bind(":abc", $abc.'%');
+        }
+        $db->bind(":tags", $tags);
       } else {
-        $db->query("SELECT COUNT(*) FROM $table WHERE LOWER($field1) LIKE :abc");
-        $db->bind(":abc", $abc.'%');
+        if ($abc=='Tots') {
+          $db->query("SELECT COUNT(*) FROM $table WHERE $field1 IS NOT NULL AND TRIM($field1) <> ''");
+        } else {
+          $db->query("SELECT COUNT(*) FROM $table WHERE LOWER($field1) LIKE :abc");
+          $db->bind(":abc", $abc.'%');
+        }
       }
     }
 
@@ -94,11 +115,16 @@
 
     // Case 1: nothing set (default) selects all streets starting with A
     if($query==null && $abc==null) {
-      $db->query("SELECT $fields FROM $table WHERE LOWER($field1) LIKE 'a%' ORDER BY $field1 LIMIT :limit OFFSET :offset");
+      if($tags!==null) {
+        $db->query("SELECT $fields FROM $table WHERE LOWER($field1) LIKE 'a%' AND tsv_tags @@ plainto_tsquery(:tags) ORDER BY $field1 LIMIT :limit OFFSET :offset");
+        $db->bind(":tags", $tags);
+      } else {
+        $db->query("SELECT $fields FROM $table WHERE LOWER($field1) LIKE 'a%' ORDER BY $field1 LIMIT :limit OFFSET :offset");
+      }
     } 
     // Case 2: query set (basic search) search in table without tag filtering -> extend to optional tag input
     if($query!==null && $abc==null) {
-      if($tags!=null) {
+      if($tags!==null) {
         $db->query("SELECT $fields FROM $table WHERE tsv @@ plainto_tsquery(:query) AND tsv_tags @@ plainto_tsquery(:tags) ORDER BY $field1 LIMIT :limit OFFSET :offset");
         $db->bind(":tags", $tags);
       } else {
@@ -108,11 +134,22 @@
     }
     // Case 3: abc selected, in that case is mandatory. If "Tots", get all table.
     if($abc!==null) {
-      if ($abc=='Tots') {
-        $db->query("SELECT $fields FROM $table WHERE $field1 IS NOT NULL AND TRIM($field1) <> '' ORDER BY $field1 LIMIT :limit OFFSET :offset");
+
+      if($tags!==null){
+        if ($abc=='Tots') {
+          $db->query("SELECT $fields FROM $table WHERE $field1 IS NOT NULL AND TRIM($field1) <> '' AND tsv_tags @@ plainto_tsquery(:tags) ORDER BY $field1 LIMIT :limit OFFSET :offset");
+        } else {
+          $db->query("SELECT $fields FROM $table WHERE LOWER($field1) LIKE :abc AND tsv_tags @@ plainto_tsquery(:tags) ORDER BY $field1 LIMIT :limit OFFSET :offset");
+          $db->bind(":abc", $abc.'%');
+        }
+        $db->bind(":tags", $tags);
       } else {
-        $db->query("SELECT $fields FROM $table WHERE LOWER($field1) LIKE :abc ORDER BY $field1 LIMIT :limit OFFSET :offset");
-        $db->bind(":abc", $abc.'%');
+        if ($abc=='Tots') {
+          $db->query("SELECT $fields FROM $table WHERE $field1 IS NOT NULL AND TRIM($field1) <> '' ORDER BY $field1 LIMIT :limit OFFSET :offset");
+        } else {
+          $db->query("SELECT $fields FROM $table WHERE LOWER($field1) LIKE :abc ORDER BY $field1 LIMIT :limit OFFSET :offset");
+          $db->bind(":abc", $abc.'%');
+        }
       }
     }
 

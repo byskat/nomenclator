@@ -44,7 +44,7 @@
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat.</p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Més informació »</a></p>
+      <p><a class="btn btn-primary btn-lg" href="+info.php" role="button">Més informació »</a></p>
     </div>
   </div>
 
@@ -55,6 +55,7 @@
         <div class="gazetteer-search">
           <span class="fa fa-search gazetteer-icon-search"></span>
           <div class="filter-container" style="position: relative;">
+            <button id="filter-indicator" type="button" class="gazetter gazetteer-icon-indicator" onClick="tagRemove(this)"></button>
             <button id="filter-button" type="button" class="fa fa-sliders gazetteer-icon-filter" style="right: 8px;"></button>
 
             <div id="tag-popover" class="popover fade bottom in" role="tooltip" style="top: -14px; left: inherit; right: 0; display: hidden;">
@@ -98,11 +99,11 @@
     <div class="row">
       <div class="col-md-12">
         <section class="abc-header">
-          <div class="col-md-6 no-padding">
-            <h1 class="major-letter"><span id="q">A</span> <span class="filterSymbol"></span> <span id="tag"></span> <span class="letter-count"><span id="num">?</span> resultats </span></h1>
+          <div class="col-md-8 no-padding">
+            <h1 class="major-letter"><span id="q">A</span> <span class="filterSymbol"></span> <span id="tag" class="filterTag"></span> <span class="letter-count"><span id="num">? resultats</span></span></h1>
           </div>
 
-          <nav id="paginator" class="text-right col-md-6 no-padding">
+          <nav id="paginator" class="text-right col-md-4 no-padding">
             <ul class="pagination custom-pagination">
               <li class="page-item"><button id="first" class="page-link"><<</button></li>
               <li class="page-item"><button id="prev" class="page-link"><</button></li>
@@ -119,6 +120,38 @@
 
     <div id="resultsContainer" class="row abc-results"></div>
 
+    <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content view">
+          <div class="modal-header">
+            <h3>Carrer de l'</h3><h2>Abat Escarré</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <a id="extend_map" type="button" class="extend-map" target="_blank" href="http://www.girona.cat/planol/?q=Carrer de l'Abat Escarré"><i class="fa fa-expand" aria-hidden="true"></i></a>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-4 no-padding">
+              <p><b>Any de modificació: </b><span id="data_variacio"></span></p>
+              <p><b>Nom postal: </b><span id="nom_postal"></span></p>
+            </div>
+            <div class="col-md-4 no-padding">
+              <p><b>Tipus de carrer: </b><span id="tipus_car"></span></p>
+              <p><b>Nom normalitzat: </b><span id="nom_normalitzat"></span></p>
+            </div>
+            <div class="col-md-4 no-padding">
+              <p><b>Codi: </b><span id="codi_car"></span></p>
+              <p><b>Actiu: </b><span id="actiu"></span></p>
+            </div>
+            <div class="col-md-12 no-padding">
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.</p>
+            </div>
+            <div class="iframe-container">
+              <iframe src="http://www.girona.cat/planol/?q=Carrer de l'Abat Escarré"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <nav id="test" class="text-center col-md-12 no-padding">
       <ul class="pagination custom-pagination">
         <li class="page-item"><button class="first page-link"><<</button></li>
@@ -129,14 +162,15 @@
       </ul>
     </nav>
 
-    <hr>
-
-    <footer>
-      <p>© 2017 Ajuntament de Girona.</p>
-    </footer>
     <input id="pag" type="hidden" readonly="readonly" name="pag" value="1">
   </form>
   </div> <!-- /container -->
+  <footer class="container">
+    <div class="col-md-12 no-padding">
+      <hr>
+      <p>© 2017 Ajuntament de Girona.</p>
+    </div>
+  </footer>
 
   <script type="text/javascript" src="resources/vendor/jquery-3.1.1.min.js"></script>
   <script type="text/javascript" src="resources/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
