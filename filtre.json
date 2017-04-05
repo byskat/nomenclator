@@ -1,0 +1,18 @@
+{
+	"filtre" : [{
+		"camp"		: "codi_tipus_via",
+		"nom"		: "Vies",
+		"filtres"	: [
+			{ "valor" : "CR", "nom" : "Carrer" },
+			{ "valor" : "JR", "nom" : "Jardí" }
+		]
+	},
+	{
+		"camp"		: "data_variacio",
+		"nom"		: "Anys",
+		"filtres"	: [
+			{ "valor" : "2001", "nom" : "2001" },
+			{ "valor" : "", 	"nom" : "S.R." }
+		]
+	}]
+}

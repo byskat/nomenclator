@@ -75,10 +75,14 @@ h1, h2, h3
   background-color: #e8554e
   border-color: #e7544d
   color: #fff
-  &:hover, &:active, &:visited
-    background-color: #e8554e
-    border-color: #e7544d
-    color: #fff
+  &:hover, &:active ,&:visited
+    background-color: #e8554e !important
+    border-color: #e7544d !important
+    color: #fff !important
+
+.btn-secondary
+  background-color: #ddd
+  color: #000
 
 .navbar
   margin-bottom: 0
@@ -93,24 +97,31 @@ h1, h2, h3
 
 /* Search Navbar */
 
-.navbar-search input
-  &[type="search"]
-    background-image: url('https://digitalsynopsis.com/wp-content/uploads/2014/01/search-icon.png')
-    background-repeat: no-repeat
-    background-position: 7px 5px
-    padding-left: 33px
-    background-color: #353535
-    border: 2px solid #222
-    color: #fff
-    text-transform: none
-    width: 180px
-    height: 34px
-    border-radius: 25px
-    outline: none
-  &[type="submit"]
-    display: none
-  &:focus, &:visited
-    border: 2px solid #7a7a7a
+.navbar-search 
+  position: relative
+  padding: 10px 0px
+  float: right
+  .navbar-icon-search
+    position: absolute
+    top: 17px
+    left: 11px
+    font-size: 20px
+    color: #7a7a7a
+  input
+    &[type="search"]
+      padding-left: 33px
+      background-color: #353535
+      border: 2px solid #222
+      color: #fff
+      text-transform: none
+      width: 180px
+      height: 34px
+      border-radius: 25px
+      outline: none
+    &[type="submit"]
+      display: none
+    &:focus, &:visited
+      border: 2px solid #7a7a7a
 
 /* Search Gazeetter */
 
@@ -248,3 +259,20 @@ button.disabled
     &, &:hover, &:focus
       cursor: default
       background-color: #ddd
+
+// More Info
+
+.more-info
+  margin-bottom: 10px
+
+.previous
+  font-size: 45px
+  color: #ccc
+.style-slash
+  color: #e8554e
+  margin: 0 10px
+
+.documents
+  a.btn
+    margin-bottom: 5px
+    margin-right: 5px

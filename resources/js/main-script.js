@@ -10,6 +10,17 @@ $(function () {
   
 });
 
+//Dissmisable filter popover
+$(window).click(function() {
+  if($('#tag-popover').is(':visible')) {
+    $('#filter-button').trigger('click');
+  }
+});
+
+$('#tag-popover, #filter-button').click(function(event){
+    event.stopPropagation();
+});
+
 function loadTags(popover) {
   var requestTags;
 
@@ -262,6 +273,8 @@ $(document).ready(function() {
   $('.alphabet-filter span').find('input[type="radio"]').first().attr('checked', true);
 });
 
+abcGeneration('.alphabet-filter');
+
 /* Alphabet clicable text */
 $('.alphabet-filter span').click(function(e) {
   
@@ -342,6 +355,20 @@ function tagActivation(elm) {
   $('#search-form').submit();
 }
 
+// Generation of abc filter
+function abcGeneration(elm) {
+  abc = ['a','b','c','d','e','f','g','h','i',
+         'j','k','l','m','n','o','p','q','r',
+         's','t','u','v','w','x','y','z','Tots'];
+  html = '';
+  for (var i = 0; i < abc.length; i++) {
+    html += '<span><input type="radio" name="a" value="';
+    html += abc[i] + '" cheked="cheked">';
+    html += abc[i]+'</span>\n';
+  }
+  $(elm).append(html);
+}
+
 // Pagination
 
   function add() {
@@ -385,7 +412,6 @@ $('#tagsinput').keypress(function (e) {
     paginationReset();
   }
 });
-
 
 function paginator(element, hidden, limit) {
   // selector with nav container

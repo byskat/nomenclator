@@ -16,27 +16,15 @@
 <body>
   <nav class="navbar">
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Ajuntament de Girona</a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        
-        <form class="navbar-search navbar-form navbar-right" itemscope="" method="get" action="" role="search">
-          <meta itemprop="target" content="/?s={s}">
-          <input itemprop="query-input" type="search" name="s" placeholder="Cerca en el lloc ...">
-          <input type="submit" value="Search">
-        </form>
-      </div><!--/.navbar-collapse -->
+      <a class="navbar-brand" target="_blank" href="http://www.girona.cat">Ajuntament de Girona</a>
+      <form class="navbar-search" itemscope="" method="get" action="" role="search">
+        <span class="fa fa-search navbar-icon-search"></span>
+        <input itemprop="query-input" type="search" name="s" placeholder="Cerca en el lloc ...">
+        <input type="submit" value="Search">
+      </form>
     </div>
   </nav>
 
-  <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
       <h1>Nomenclàtor de Girona</h1>
@@ -57,14 +45,12 @@
           <div class="filter-container" style="position: relative;">
             <button id="filter-indicator" type="button" class="gazetter gazetteer-icon-indicator" onClick="tagRemove(this)"></button>
             <button id="filter-button" type="button" class="fa fa-sliders gazetteer-icon-filter" style="right: 8px;"></button>
-
             <div id="tag-popover" class="popover fade bottom in" role="tooltip" style="top: -14px; left: inherit; right: 0; display: hidden;">
               <div class="arrow" style="left: 91%;"></div>
               <h3 class="popover-title">Filtre</h3>
               <div class="popover-content"></div>
             </div>
           </div>
-
           <div class="tagsinput-container">
             <input id="tagsinput" class="bootstrap-tagsinput" type="text" name="q" data-role="tagsinput" placeholder="Cerca general de carrers ..." />
             <input id="queryinput" type="hidden" name="t">
@@ -77,21 +63,6 @@
     <div class="row">
       <div class="col-md-12">
         <div class="alphabet-filter">
-          <?php
-            $abc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','Tots'];
-            $arr_length = count($abc);
-            $temp = '';
-
-            if (isset($_GET['a'])) $temp = $_GET['a'];
-
-            for($i=0;$i<$arr_length;$i++) {
-              if ($temp==$abc[$i]) {
-                echo "<span class='active'><input type='radio' name='a' value='".$abc[$i]."' cheked='cheked'>".$abc[$i]."</span>\n"; 
-              } else {
-                echo "<span><input type='radio' name='a' value='".$abc[$i]."'>".$abc[$i]."</span>\n"; 
-              }
-            }
-          ?>
         </div>
       </div>
     </div>
@@ -102,7 +73,6 @@
           <div class="col-md-8 no-padding">
             <h1 class="major-letter"><span id="q">A</span> <span class="filterSymbol"></span> <span id="tag" class="filterTag"></span> <span class="letter-count"><span id="num">? resultats</span></span></h1>
           </div>
-
           <nav id="paginator" class="text-right col-md-4 no-padding">
             <ul class="pagination custom-pagination">
               <li class="page-item"><button id="first" class="page-link"><<</button></li>
@@ -112,7 +82,6 @@
               <li class="page-item"><button id="last" val="1" class="page-link">>></button></li>
             </ul>
           </nav>
-
           <div style="clear: both;"></div>
         </section>
       </div>
@@ -124,9 +93,9 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content view">
           <div class="modal-header">
-            <h3>Carrer de l'</h3><h2>Abat Escarré</h2>
+            <h3></h3><h2></h2>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
-            <a id="extend_map" type="button" class="extend-map" target="_blank" href="http://www.girona.cat/planol/?q=Carrer de l'Abat Escarré"><i class="fa fa-expand" aria-hidden="true"></i></a>
+            <a id="extend_map" type="button" class="extend-map" target="_blank" href=""><i class="fa fa-expand" aria-hidden="true"></i></a>
           </div>
           <div class="modal-body">
             <div class="col-md-4 no-padding">
@@ -145,13 +114,13 @@
               <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.</p>
             </div>
             <div class="iframe-container">
-              <iframe src="http://www.girona.cat/planol/?q=Carrer de l'Abat Escarré"></iframe>
+              <iframe src=""></iframe>
             </div>
           </div>
         </div>
       </div>
     </div>
-
+    <!--
     <nav id="test" class="text-center col-md-12 no-padding">
       <ul class="pagination custom-pagination">
         <li class="page-item"><button class="first page-link"><<</button></li>
@@ -161,7 +130,7 @@
         <li class="page-item"><button class="last page-link">>></button></li>
       </ul>
     </nav>
-
+    -->
     <input id="pag" type="hidden" readonly="readonly" name="pag" value="1">
   </form>
   </div> <!-- /container -->
