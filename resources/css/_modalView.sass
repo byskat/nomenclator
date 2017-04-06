@@ -9,21 +9,25 @@
       margin: 8px 0 0 0
     & h3
       margin: 0
-    & .close, & .extend-map
+    & .close, & .location-map, & .extend-map
       position: absolute
       color: #fff
     & .close
       top: 10px
       right: 10px
-    & .extend-map
+    & .location-map, & .extend-map
       bottom: 10px
-      right: 10px
       width: 30px
       height: 30px
       padding: 5px 0
       background-color: #e8554e
       border-radius: 50px
       text-align: center
+    & .location-map
+      right: 10px
+    & .extend-map
+      right: 47px
+
   .modal-body
     padding: 10px 15px
     .iframe-container

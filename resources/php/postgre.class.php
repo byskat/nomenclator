@@ -134,6 +134,10 @@ class Db{
     return $this->stmt->debugDumpParams();
   }
 
+  public function close() {
+    return $this->connection = null;
+  }
+
   public function getLastError() {
     return $this->error;
   }

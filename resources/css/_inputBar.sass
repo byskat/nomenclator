@@ -1,7 +1,7 @@
 .tagsinput-container
   position: relative
 
-.bootstrap-tagsinput
+.bootstrap-queryinput
   position: absolute
   top: -56px
   width: 100%
@@ -62,7 +62,7 @@
   border: 0
   font-family: "Droid Sans"
 
-.bootstrap-tagsinput .tag [data-role="remove"]
+.bootstrap-queryinput .tag [data-role="remove"]
   border-radius: 30px
   font-size: 14px
   margin-left: 8px
@@ -78,11 +78,14 @@
 
 .gazetteer-search
   .popover
+    z-index: 1
     width: 100%
   & input[type="submit"]
     display: none
   & input[type="text"]:focus
     border-color: #e8554e    
+  .filter-title
+    font-family: "Oswald"
   .tag
     display: inline-block
     font-family: "Droid Sans"

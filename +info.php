@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="resources/css/main-style.css">
 
 </head>
+
+<?php require_once("resources/php/functions.php"); ?>
+
 <body>
   <nav class="navbar">
     <div class="container">
@@ -28,7 +31,7 @@
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron more-info">
     <div class="container">
-      <h1><span class="previous">Nomenclàtor de Girona</span><span class="style-slash">/</span>+ Info</h1>
+      <h1><span class="previous">Nomenclàtor de Girona</span><span class="style-slash">/</span>Comisió del Nomenclàtor</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -98,33 +101,14 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua.</p>
       <p>
-      <?php
-        $directory = "documents/reglament/";
-        $phpfiles = glob($directory . "*.pdf");
-        usort($phpfiles, create_function('$a,$b', 'return filemtime($a) - filemtime($b);'));
-
-        foreach($phpfiles as $phpfiles) {
-          $phpfiles = utf8_encode($phpfiles);
-          echo '<a class="btn btn-default" target="_blank" href="'.$phpfiles.'"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> '.basename($phpfiles,".pdf").'</a>';
-        }
-      ?>
+        <?php getLegalFiles("documents/reglament/"); ?>
       </p>
       <hr>
       <h3>Actes</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua.</p>
       <p>
-      <?php
-        $directory = "documents/actes/";
-        //getLegalFiles("documents/actes/");
-        $phpfiles = glob($directory . "*.pdf");
-        usort($phpfiles, create_function('$a,$b', 'return filemtime($a) - filemtime($b);'));
-
-        foreach($phpfiles as $phpfiles) {
-          $phpfiles = utf8_encode($phpfiles);
-          echo '<a class="btn btn-default" target="_blank" href="'.$phpfiles.'"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> '.basename($phpfiles,".pdf").'</a>';
-        }
-      ?>
+        <?php getLegalFiles("documents/actes/"); ?>
       </p>
     </div>
     </div>

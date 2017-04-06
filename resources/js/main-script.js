@@ -1,7 +1,7 @@
 //TAG popover
 $(function () {
 
-  loadTags($('#filter-button'));
+  //loadTags($('#filter-button'));
   
   $('#filter-button').on('click', function () {
     $(this).toggleClass('active');
@@ -20,41 +20,6 @@ $(window).click(function() {
 $('#tag-popover, #filter-button').click(function(event){
     event.stopPropagation();
 });
-
-function loadTags(popover) {
-  var requestTags;
-
-  requestTags = $.ajax({
-      url: "resources/php/tagServer.php",
-      type: "get"
-  });
-
-  // Callback handler that will be called on success
-  requestTags.done(function (response, textStatus, jqXHR){
-    response = JSON.parse(response);
-
-    filterArray = [];
-    html = '';
-    response.forEach(function(item) {      
-      html += '<span class="tag" onClick="tagActivation(this)">'
-      html += '<input type="radio" name="t" ';
-      html += 'value="'+item['codi_tipus_via']+'">';
-      html += item['nom_tag']+'</span>';
-
-      filterArray[item['codi_tipus_via']] = item['nom_tag'];
-    });
-
-    $('#tag-popover .popover-content').append(html);
-  });
-
-  requestTags.fail(function (jqXHR, textStatus, errorThrown){
-      // Log the error to the console
-      console.error(
-          "LOADTAGS | The following error occurred: "+
-          textStatus, errorThrown
-      );
-  });
-}
 
 // MODEL LOAD
 function loadModal(elm) {
@@ -124,13 +89,13 @@ function updateGazetteer(request, form) {
   // If form isn't defined means default request
   if (typeof form === 'undefined') {
     // Default inputs
-    serializedData = 'q=&t=&a=a&pag=1';
+    serializedData = 'q=&t=&a=&pag=1';
   } else {
     // Get inputs from form
     var $form = $(form);
 
     // Let's select and cache all the fields
-    var $inputs = $form.find("input#tagsinput, input#queryinput, input#pag");
+    var $inputs = $form.find("input#queryinput, input#tagsinput, input#pag");
 
     // Serialize the data in the form
     serializedData = $form.serialize();
@@ -166,8 +131,17 @@ function updateGazetteer(request, form) {
     }
 
     if(response['tag']) {
+      responseTag = response['tag'];
+      t = [];
+
+      $.each(responseTag, function(key, value) {
+        filterList.forEach(function(a) {
+          if(a['valor']==value) t.push(a['nom']);
+        });
+      });
+
       $('.filterSymbol').text('+');
-      $('#tag').text(filterArray[response['tag']]);
+      $('#tag').text(t.join(', '));
     } else {
       $('.filterSymbol').text('');
       $('#tag').text('');
@@ -251,7 +225,7 @@ function updateGazetteer(request, form) {
 }
 
 // If focus on search input -> uncheck abc radios
-$("#tagsinput").focus(function() {
+$("#queryinput").focus(function() {
   $('.alphabet-filter .active').removeClass('active');
   $('.alphabet-filter input:checked').attr('checked', false);
 }); 
@@ -297,13 +271,9 @@ $('.alphabet-filter span').click(function(e) {
   $('#search-form').submit();
 });
 
-$('input[type="radio"]').click(function(e) {
-  //e.stopPropagation();
-});
-
 function tagRemove(elm) {
 
-  $('#queryinput').val('');
+  $('#tagsinput').val('');
   $('#tag-popover').find('input[type="radio"]').attr('checked', false);
   $('#tag-popover').find('span').removeClass('active');
 
@@ -316,54 +286,15 @@ function tagRemove(elm) {
   $('#search-form').submit();
 }
 
-function tagActivation(elm) {
-  //Get all sibling tags
-  siblings = $(elm).siblings();
-  
-  //Remove active
-  siblings.removeClass('active');
-  $('#filter-indicator').removeClass('active');
-
-  //Uncheck functionality
-  if($(elm).find('input[type="radio"]:checked').length) {
-    //If the same tag is selected, then, uncheck it
-    $(elm).removeClass('active');
-
-    $(elm).find('input[type="radio"]').attr('checked', false);
-
-    $('#queryinput').val('');
-  } else {
-    // Find previus checked item
-    $(siblings).find('input').attr('checked', false);
-    
-    // Find new checkbox to be checked
-    $(elm).find('input[type="radio"]').attr('checked', true);
-
-    $('#queryinput').val($(elm).find('input').val());
-
-    // Add active visuals to current cheked span
-    $(elm).addClass('active');
-
-    // Add active visuals to tag indicator
-    $('#filter-indicator').addClass('active');
-  }
-
-  //Reset pagination
-  paginationReset();
-
-  // Inmediate submit after click
-  $('#search-form').submit();
-}
-
 // Generation of abc filter
 function abcGeneration(elm) {
-  abc = ['a','b','c','d','e','f','g','h','i',
-         'j','k','l','m','n','o','p','q','r',
-         's','t','u','v','w','x','y','z','Tots'];
+  abc = ['Tots','a','b','c','d','e','f','g','h',
+         'i','j','k','l','m','n','o','p','q','r',
+         's','t','u','v','w','x','y','z'];
   html = '';
   for (var i = 0; i < abc.length; i++) {
     html += '<span><input type="radio" name="a" value="';
-    html += abc[i] + '" cheked="cheked">';
+    html += abc[i] + '">';
     html += abc[i]+'</span>\n';
   }
   $(elm).append(html);
@@ -407,56 +338,78 @@ function paginationReset() {
   $('#pag').val('1');
 }
 
-$('#tagsinput').keypress(function (e) {
+$('#queryinput').keypress(function (e) {
   if (e.which == 13) {
     paginationReset();
   }
 });
 
-function paginator(element, hidden, limit) {
-  // selector with nav container
-  this.element = element;
-  // selector with hidden input with page valor
-  this.hidden = hidden;
-  // page valor
-  this.current = $(this.hidden).val();
-  // max number of valors
-  this.limit = limit;
+// New tag filler
 
-  // nav local selectors (create them with draw function?)
-  this.first = element + " .first";
-  this.prev = element + " .prev";
-  this.stat = element + " .stat";
-  this.next = element + " .next";
-  this.last = element + " .last";
+$.getJSON("filtre.json", function(filter) {
+  html = '';
+  filterList = [];
 
-  this.add = function() {
-    if(this.current <= $(this.last).val()) this.apply(this.current+1);
-    console.log(this.last);
-    console.log("Current: "+this.current);
-  }
+  filter.forEach(function(element) {
+    
+    element['filtres'].forEach(function(a) {
+      filterList.push(a);
+    });
 
-  this.sub = function() {
-    if(this.current>0) this.apply(this.current--);
-    console.log("prev");
-  }
+    html += '<div>';
+    html += '<h4 class="filter-title">'+element['nom']+'</h4>'; 
 
+    element['filtres'].forEach(function(fields) {
+      html += '<span class="tag" onclick="tagActivation2(this)"><input type="radio" name="'+element['camp']+'" value="'+fields['valor']+'">'+fields['nom']+'</span>';
+    });
 
-  this.click = function(e) {
-    if ($(e['currentTarget']).hasClass('next')) this.add();
-    if ($(e['currentTarget']).hasClass('prev')) this.sub();
-    //console.log(e['currentTarget']);
-    //console.log($(e).attr('class'));
-  }
+    html += '</div>';
+    
+  });
 
-  this.apply = function(newValor) {
-    console.log(newValor);
-    $(this.hidden).val(newValor);
-  }
-}
-
-var testPag = new paginator("#test", "#pag", 10);
-
-$('#test').on('click', 'button', function(e){
-  testPag.click(e);
+  $('#tag-popover .popover-content').append(html);
 });
+
+function tagActivation2 (elm) {
+  //Get all sibling tags
+  siblings = $(elm).siblings();
+  
+  //Remove active
+  siblings.removeClass('active');
+  
+  //Uncheck functionality
+  if($(elm).find('input[type="radio"]:checked').length) {
+    //If the same tag is selected, then, uncheck it
+    $(elm).removeClass('active');
+    $(elm).find('input[type="radio"]').attr('checked', false);
+
+  } else {
+    // Find previus checked item
+    $(siblings).find('input').attr('checked', false);
+    
+    // Find new checkbox to be checked
+    $(elm).find('input[type="radio"]').attr('checked', true);
+  
+    // Add active visuals to current cheked span
+    $(elm).addClass('active');
+
+    // Add active visuals to tag indicator
+    $('#filter-indicator').addClass('active');
+  }
+
+  // Fills in a hidden input the names of the filled checkboxes
+  listTags = [];
+
+  $("#tag-popover input:checked").each(function(index) {
+    listTags.push($(this).attr('name'));
+  });
+  $('#tagsinput').val(listTags);
+
+  if(listTags==0) $('#filter-indicator').removeClass('active');
+
+  //Reset pagination
+  paginationReset();
+
+  // Inmediate submit after click
+  $('#search-form').submit();
+}

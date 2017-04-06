@@ -32,7 +32,7 @@
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat.</p>
-      <p><a class="btn btn-primary btn-lg" href="+info.php" role="button">Més informació »</a></p>
+      <p><a class="btn btn-primary btn-lg" href="+info.php" role="button">Comisió del Nomenclàtor »</a></p>
     </div>
   </div>
 
@@ -52,8 +52,8 @@
             </div>
           </div>
           <div class="tagsinput-container">
-            <input id="tagsinput" class="bootstrap-tagsinput" type="text" name="q" data-role="tagsinput" placeholder="Cerca general de carrers ..." />
-            <input id="queryinput" type="hidden" name="t">
+            <input id="queryinput" class="bootstrap-queryinput" type="text" name="q" placeholder="Cerca general de carrers ..." />
+            <input id="tagsinput" type="hidden" name="t">
           </div>
           <input type="submit" value="Search">
         </div>
@@ -71,7 +71,7 @@
       <div class="col-md-12">
         <section class="abc-header">
           <div class="col-md-8 no-padding">
-            <h1 class="major-letter"><span id="q">A</span> <span class="filterSymbol"></span> <span id="tag" class="filterTag"></span> <span class="letter-count"><span id="num">? resultats</span></span></h1>
+            <h1 class="major-letter"><span id="q">Tots</span> <span class="filterSymbol"></span> <span id="tag" class="filterTag"></span> <span class="letter-count"><span id="num">? resultats</span></span></h1>
           </div>
           <nav id="paginator" class="text-right col-md-4 no-padding">
             <ul class="pagination custom-pagination">
@@ -95,7 +95,8 @@
           <div class="modal-header">
             <h3></h3><h2></h2>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
-            <a id="extend_map" type="button" class="extend-map" target="_blank" href=""><i class="fa fa-expand" aria-hidden="true"></i></a>
+            <a id="extend_map" type="button" class="location-map" target="_blank" href=""><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+            <a type="button" class="extend-map" target="_blank" href="http://www.girona.cat/planol/"><i class="fa fa-map-o" aria-hidden="true"></i></a>
           </div>
           <div class="modal-body">
             <div class="col-md-4 no-padding">
@@ -120,17 +121,6 @@
         </div>
       </div>
     </div>
-    <!--
-    <nav id="test" class="text-center col-md-12 no-padding">
-      <ul class="pagination custom-pagination">
-        <li class="page-item"><button class="first page-link"><<</button></li>
-        <li class="page-item"><button class="prev page-link"><</button></li>
-        <li class="page-item"><button class="stat page-link">1 de 1</button></li>
-        <li class="page-item"><button class="next page-link">></button></li>
-        <li class="page-item"><button class="last page-link">>></button></li>
-      </ul>
-    </nav>
-    -->
     <input id="pag" type="hidden" readonly="readonly" name="pag" value="1">
   </form>
   </div> <!-- /container -->
