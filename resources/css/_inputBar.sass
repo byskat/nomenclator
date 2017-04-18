@@ -1,0 +1,200 @@
+.tagsinput-container
+  position: relative
+
+.bootstrap-queryinput
+  position: absolute
+  top: -56px
+  width: 100%
+  height: 50px
+  border: 3px solid
+  border-radius: 30px
+  padding: 0 32px 0 44px
+  border: 3px solid #222
+  background-color: #fff
+  cursor: text
+  outline: none
+  line-height: 43px
+  input
+    font-size: 16px
+    padding-left: 5px
+    border: none
+    box-shadow: none
+    outline: none
+    background-color: transparent
+    margin: 0
+    width: auto
+    max-width: inherit
+    height: 100%
+  &.form-control input
+    &::-moz-placeholder
+      color: #777
+      opacity: 1
+    &:-ms-input-placeholder, &::-webkit-input-placeholder
+      color: #777
+  input:focus
+    border: none
+    box-shadow: none
+  .tag
+    margin-right: 6px
+    color: white
+    font-size: initial
+    font-weight: normal
+    border-radius: 30px
+    outline: none
+    word-spacing: normal
+    letter-spacing: normal
+    display: inline
+    border: 0
+    font-family: "Droid Sans"
+
+.filter-tag
+  margin: 0 6px 6px 0
+  padding: .2em .6em .2em
+  color: white
+  background-color: #7a7a7a
+  font-size: initial
+  font-weight: normal
+  border-radius: 30px
+  outline: none
+  word-spacing: normal
+  letter-spacing: normal
+  display: inline
+  border: 0
+  font-family: "Droid Sans"
+
+.bootstrap-queryinput .tag [data-role="remove"]
+  border-radius: 30px
+  font-size: 14px
+  margin-left: 8px
+  cursor: pointer
+  &:after
+    font-family: FontAwesome
+    content: "\f057"
+    padding: 0px 2px
+  &:hover
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05)
+    &:active
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125)
+
+.gazetteer-search
+  & input[type="submit"]
+    display: none
+  & input[type="text"]:focus
+    border-color: #e8554e   
+
+  .gazetteer-icon-search
+    position: absolute
+    z-index: 1
+    outline: none
+    top: -45px
+    left: 33px
+    color: #ccc
+    &:before
+      content: "\f002"
+      font-family: FontAwesome
+      font-size: 20px
+      font-style: normal
+      font-weight: normal
+      text-decoration: inherit
+
+  .filter-container
+    position: relative
+
+    .gazetteer-icon-filter, .gazetteer-icon-indicator
+      position: absolute
+      z-index: 1
+      outline: none
+
+    .gazetteer-icon-filter
+      border-radius: 30px
+      border: 0
+      height: 34px
+      width: 34px
+      top: -48px
+      right: 8px
+      padding: 0
+      background-color: initial
+      cursor: pointer
+      &:before
+        content: "\f1de"
+        font-family: FontAwesome
+        font-size: 20px
+        font-style: normal
+        font-weight: normal
+        text-decoration: inherit
+      &:hover
+        background-color: #eee
+      &.active
+        background-color: #e8554e
+        color: #fff
+
+
+
+    .gazetteer-icon-indicator
+      border-radius: 30px
+      border: 0
+      height: 25px
+      width: 25px
+      top: -43px
+      right: 47px
+      padding: 0
+      color: #ddd 
+      cursor: auto
+      background-color: initial
+      &:before
+        content: "\f0b0"
+        font-family: FontAwesome
+        font-style: normal
+        font-weight: normal
+        text-decoration: inherit
+      &.active
+        background-color: #e8554e
+        color: #fff
+        cursor: pointer
+        &:hover:before
+          content: "\f00d"
+
+  .popover
+    z-index: 1
+    width: 100%
+    top: -14px
+    left: inherit
+    right: 0
+    display: hidden
+
+    .arrow
+      left: 91%
+
+  & input[type="submit"]
+    display: none
+  & input[type="text"]:focus
+    border-color: #e8554e   
+
+  .filter-title
+    font-family: "Oswald"
+
+  .tag
+    display: inline-block
+    font-family: "Droid Sans"
+    background-color: #ccc
+    color: #353535
+    border-radius: 30px
+    margin: 0 6px 6px 0
+    padding: 3px 10px
+    position: relative
+    cursor: pointer
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+
+    input[type="radio"]
+      display: none
+      position: absolute
+      left: 5px
+
+    &.active
+      background-color: #e8554e
+      color: #fff

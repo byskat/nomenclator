@@ -1,0 +1,278 @@
+/*
+ *	
+ *	Color Palette - https://coolors.co/e8554e-222222-353535-cccccc-ffffff
+ *	
+ *	#e8554e 
+ *	#222
+ *	#353535
+ *	#ccc
+ *	
+ *	#eee
+ *
+ *	#fff
+ *
+ *
+ *	Fonts
+ *
+ *	Oswald - Header
+ *	Droid Sans - Body
+
+/*FontAwesome*/
+@import url('../fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+
+/*Oswald*/
+@font-face
+  font-family: "Oswald"
+  src: url("../fonts/Oswald/Oswald-Regular.ttf")
+  font-weight: 400
+
+
+@font-face
+  font-family: "Oswald"
+  src: url("../fonts/Oswald/Oswald-Bold.ttf")
+  font-weight: 700
+
+
+@font-face
+  font-family: "Oswald"
+  src: url("../fonts/Oswald/Oswald-Light.ttf")
+  font-weight: 300
+
+
+/*Roboto*/
+@font-face
+  font-family: "Droid Sans"
+  src: url("../fonts/Droid_Sans/DroidSans.ttf")
+  font-weight: 400
+
+
+@font-face
+  font-family: "Droid Sans"
+  src: url("../fonts/Droid_Sans/DroidSans-Bold.ttf")
+  font-weight: 700
+
+body
+  font-family: "Droid Sans", sans-serif
+
+h1, h2, h3
+  font-family: "Oswald", sans-serif
+
+/* Helper classes */
+
+.no-padding 
+  padding: 0
+
+/* Bootstrap overide */
+
+.navbar-brand
+  color: #e8554e
+  &:hover, &:visited
+    color: #e8554e
+  &:hover
+    text-decoration: underline
+
+.btn-primary
+  background-color: #e8554e
+  border-color: #e7544d
+  color: #fff
+  &:hover, &:active ,&:visited
+    background-color: #e8554e !important
+    border-color: #e7544d !important
+    color: #fff !important
+
+.btn-secondary
+  background-color: #ddd
+  color: #000
+
+.navbar
+  margin-bottom: 0
+  border-radius: 0
+  background-color: #222
+  color: #fff
+
+.jumbotron
+  padding-top: 10px
+  background-color: #222
+  color: #fff
+
+/* Search Navbar */
+
+.navbar-search 
+  position: relative
+  padding: 10px 0px
+  float: right
+  .navbar-icon-search
+    position: absolute
+    top: 17px
+    left: 11px
+    font-size: 20px
+    color: #7a7a7a
+  input
+    &[type="search"]
+      padding-left: 33px
+      background-color: #353535
+      border: 2px solid #222
+      color: #fff
+      text-transform: none
+      width: 180px
+      height: 34px
+      border-radius: 25px
+      outline: none
+    &[type="submit"]
+      display: none
+    &:focus, &:visited
+      border: 2px solid #7a7a7a
+
+/* Search Gazeetter */
+
+@import inputBar
+
+/* Modal style */
+
+@import modalView
+
+/* ABC filter */
+
+.alphabet-filter
+  text-align: center
+  margin-top: 10px
+  span
+    padding: 0 10px
+    cursor: pointer
+    font-size: 16px
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+  input[type=radio]
+    display: none
+  .active, 
+    color: #fff
+    background-color: #353535
+    border-radius: 30px
+    text-decoration: underline
+    text-transform: uppercase
+
+/* ABC results */
+
+.abc-header
+  border-bottom: 1px solid #222
+
+.major-letter
+  font-size: 60px
+  text-transform: capitalize
+  margin-bottom: 0
+  //border-bottom: 1px solid #222
+  & .filterSymbol
+    color: #e8554e
+  & .filterTag
+    color: #7a7a7a
+    font-size: 45px
+
+.letter-count
+  font-family: "Droid Sans", sans-serif
+  font-weight: normal
+  font-size: 14px
+  text-transform: lowercase
+  color: #353535
+
+.abc-results 
+  -moz-column-width: 25em
+  -webkit-column-width: 25em
+  -moz-column-gap: 1em
+  -webkit-column-gap: 1em 
+  & > div
+    display: inline-block
+    width: 100% 
+    float: none
+    h2
+      margin-top: 5px
+      &:after
+        content: "."
+        color: #e8554e
+        font-family: "Droid Sans", sans-serif
+        font-size: 32px
+    h3
+      color: #7a7a7a
+      margin-top: 20px
+      margin-bottom: 5px
+      font-size: 22px
+    span
+      color: #7a7a7a
+      font-family: "Droid Sans", sans-serif
+      font-weight: normal
+      font-size: 14px
+      margin-right: 5px
+
+.no-items
+  margin: 10px 0
+
+.custom-pagination 
+  margin: 30px 0 10px 0
+  > li
+    &:first-child > button
+      margin-left: 0
+      border-top-left-radius: 4px
+      border-bottom-left-radius: 4px
+    &:last-child > button
+      margin-right: 0
+      border-top-right-radius: 4px
+      border-bottom-right-radius: 4px
+    > button
+      position: relative
+      float: left
+      height: 34px
+      padding: 6px 12px
+      margin-left: -1px
+      line-height: 1.42857143
+      color: #222
+      border-color: #eee
+      text-decoration: none
+      background-color: #fff
+      border: 1px solid #ddd
+      outline: none
+      -webkit-touch-callout: none
+      -webkit-user-select: none
+      -khtml-user-select: none
+      -moz-user-select: none
+      -ms-user-select: none
+      user-select: none
+      &:hover
+        z-index: 2
+        color: #222
+        background-color: #eee
+        border-color: #ddd 
+      &.disabled
+        cursor: default
+        background-color: #ddd
+
+
+button.disabled
+  &, &:hover, &:focus
+    cursor: default
+    background-color: #ddd
+
+.disabled 
+  ul > li > button
+    &, &:hover, &:focus
+      cursor: default
+      background-color: #ddd
+
+// More Info
+
+.more-info
+  margin-bottom: 10px
+
+.previous
+  font-size: 45px
+  color: #ccc
+.style-slash
+  color: #e8554e
+  margin: 0 10px
+
+.documents
+  a.btn
+    margin-bottom: 5px
+    margin-right: 5px
