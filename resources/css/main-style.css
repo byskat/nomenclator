@@ -186,9 +186,84 @@ h1, h2, h3 {
     .bootstrap-queryinput .tag [data-role="remove"]:hover:active {
       box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
 
+.gazetteer-search input[type="submit"] {
+  display: none; }
+.gazetteer-search input[type="text"]:focus {
+  border-color: #e8554e; }
+.gazetteer-search .gazetteer-icon-search {
+  position: absolute;
+  z-index: 1;
+  outline: none;
+  top: -45px;
+  left: 33px;
+  color: #ccc; }
+  .gazetteer-search .gazetteer-icon-search:before {
+    content: "";
+    font-family: FontAwesome;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit; }
+.gazetteer-search .filter-container {
+  position: relative; }
+  .gazetteer-search .filter-container .gazetteer-icon-filter, .gazetteer-search .filter-container .gazetteer-icon-indicator {
+    position: absolute;
+    z-index: 1;
+    outline: none; }
+  .gazetteer-search .filter-container .gazetteer-icon-filter {
+    border-radius: 30px;
+    border: 0;
+    height: 34px;
+    width: 34px;
+    top: -48px;
+    right: 8px;
+    padding: 0;
+    background-color: initial;
+    cursor: pointer; }
+    .gazetteer-search .filter-container .gazetteer-icon-filter:before {
+      content: "";
+      font-family: FontAwesome;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit; }
+    .gazetteer-search .filter-container .gazetteer-icon-filter:hover {
+      background-color: #eee; }
+    .gazetteer-search .filter-container .gazetteer-icon-filter.active {
+      background-color: #e8554e;
+      color: #fff; }
+  .gazetteer-search .filter-container .gazetteer-icon-indicator {
+    border-radius: 30px;
+    border: 0;
+    height: 25px;
+    width: 25px;
+    top: -43px;
+    right: 47px;
+    padding: 0;
+    color: #ddd;
+    cursor: auto;
+    background-color: initial; }
+    .gazetteer-search .filter-container .gazetteer-icon-indicator:before {
+      content: "";
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit; }
+    .gazetteer-search .filter-container .gazetteer-icon-indicator.active {
+      background-color: #e8554e;
+      color: #fff;
+      cursor: pointer; }
+      .gazetteer-search .filter-container .gazetteer-icon-indicator.active:hover:before {
+        content: ""; }
 .gazetteer-search .popover {
   z-index: 1;
-  width: 100%; }
+  width: 100%;
+  top: -14px;
+  left: inherit;
+  right: 0;
+  display: hidden; }
+  .gazetteer-search .popover .arrow {
+    left: 91%; }
 .gazetteer-search input[type="submit"] {
   display: none; }
 .gazetteer-search input[type="text"]:focus {
@@ -218,60 +293,6 @@ h1, h2, h3 {
   .gazetteer-search .tag.active {
     background-color: #e8554e;
     color: #fff; }
-
-.gazetteer-icon-filter, .gazetteer-icon-search, .gazetteer-icon-indicator {
-  position: absolute;
-  z-index: 1;
-  outline: none; }
-
-.gazetteer-icon-filter {
-  border-radius: 30px;
-  border: 0;
-  height: 34px;
-  width: 34px;
-  top: -48px;
-  right: 23px;
-  padding: 0;
-  background-color: initial;
-  cursor: pointer; }
-  .gazetteer-icon-filter:hover {
-    background-color: #eee; }
-  .gazetteer-icon-filter.fa {
-    font-size: 20px; }
-  .gazetteer-icon-filter.active {
-    background-color: #e8554e;
-    color: #fff; }
-
-.gazetteer-icon-search {
-  top: -41px;
-  left: 33px;
-  color: #ccc; }
-  .gazetteer-icon-search.fa {
-    font-size: 20px; }
-
-.gazetteer-icon-indicator {
-  border-radius: 30px;
-  border: 0;
-  height: 25px;
-  width: 25px;
-  top: -43px;
-  right: 47px;
-  padding: 0;
-  color: #ddd;
-  cursor: auto;
-  background-color: initial; }
-  .gazetteer-icon-indicator:before {
-    content: "";
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit; }
-  .gazetteer-icon-indicator.active {
-    background-color: #e8554e;
-    color: #fff;
-    cursor: pointer; }
-    .gazetteer-icon-indicator.active:hover:before {
-      content: ""; }
 
 /* Modal style */
 .view {
