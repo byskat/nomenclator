@@ -4,6 +4,19 @@
 
   $db = new Db("web_umat_nomenclator.ini");
 
+  // MODAL (more info)
+  isset($_GET['id']) && !empty($_GET['id'])? $codi = $_GET['id'] : $codi = null;
+
+  if($codi!==null) {
+    $db->query("SELECT * FROM carrerer_1 WHERE codi_car = :codi");
+    $db->bind(":codi", $codi);
+    $db->close();
+
+    echo json_encode($db->single());
+    exit(0);
+  }
+
+  // RESULT SET (list of items)
 	//Check sent variables and set defaults
 	isset($_GET['q']) && !empty($_GET['q'])? $query = $_GET['q'] : $query = null;
 	isset($_GET['t']) && !empty($_GET['t'])? $tags = $_GET['t'] : $tags = null;
@@ -12,29 +25,18 @@
   // If neither a search string or abc letter is set, then show all elements
   ($query == null && $abc == null)? $abc = 'Tots' : null;
 
-  $tagsQuery = '';
+  // Get all the tags and build query
   $filter = null;
-
-  
   if($tags!==null) {
     $tags = explode(',', $tags);
     foreach ($tags as $tag) {
-      $valor = $_GET[$tag];
-      $filter[$tag] = $valor;
-    }
-    
-    foreach ($tags as $tag) {
-      $valor = $_GET[$tag];
-      if($valor=='null') {
-        $tagsQuery .= "AND $tag is null ";
-      } else {
-        $tagsQuery .= "AND $tag LIKE '$_GET[$tag]' " ;
-      }
+      $value = $_GET[$tag];
+      $filter[$tag] = $value;
     }
   }
-  
+
   // Count all the elements that match the criteria
-  $totalItems = fetchData('count', $db, $query, $tagsQuery, $abc);
+  $totalItems = fetchData('count', $db, $query, $filter, $abc);
   $totalItems = intval($totalItems['count']);
 
   // How many items to list per page
@@ -55,13 +57,29 @@
   $offset = ($page - 1) * $limit;
 
   // If we have items in the db we make a new query with limit & offset
-  ($totalItems!=0)? $rows = fetchData('select', $db, $query, $tagsQuery, $abc, $limit, $offset) : "";
-
-  if(!isset($rows)) {
+  if($totalItems!=0){
+    $rows = fetchData('select', $db, $query, $filter, $abc, $limit, $offset);
+  } else {
     $rows = [];
   }
 
   // Seting up associative array with response
+  /*
+    q => if user entered an string query it's also returned in the response 
+    (string || null)
+    abc => if user set some alphabetical filter it will be returned too 
+    (string || null)
+    tag => all selected tags with name of tag (as key) and value. (associtive 
+    array, JSON->object || null)
+    num => number of results in the resultset (int)
+    pag => pagination, current page loaded (int)
+    lim => pagination, maximum number of pages (int)
+    res => resultset of the fetch data function, returns array of associative 
+    array (JSON->object) with all the items found
+
+    Due to the JSON encoding all the associative arrays will become objects once
+    decoded in the js
+  */
   $response = [
     "q"   => $query,
     "abc" => $abc,
@@ -76,14 +94,15 @@
   
   // Json encode and echo
   echo json_encode($response);
+  exit(0);
 
-  function fetchData($action, $db, $query, $tagsSQL, $abc, $limit='', $offset='') {
+  function fetchData($action, $db, $query, $filter, $abc, $limit='', $offset='') {
 
     $fields = "*";
-    $table = "carrerer_1";
+    $table = "carrerer";
     $field1 = "nom_normalitzat";
 
-    //Prepare if count or select
+    // Prepare if count or select
     switch ($action) {
       case 'count':
         $selectSQL = "SELECT COUNT($fields) FROM $table";
@@ -99,21 +118,32 @@
         return 0;
     }
 
-    // Case 1: nothing set (default) selects all streets
-    if($query==null && $abc==null) {
-      $db->query("$selectSQL WHERE $field1 IS NOT NULL $tagsSQL $orderSQL $limitSQL");
-    } 
-    // Case 2: query set -> search in table 
+    // Prepare tag section of the query
+    $tagsSQL = '';
+    if($filter!==null){
+      foreach ($filter as $tag => $value) {
+        if($value=='null') {
+          $tagsSQL .= "AND $tag is null ";
+        } else {
+          $tagsSQL .= "AND $tag LIKE '$_GET[$tag]' " ;
+        }
+      }
+    }
+
+    // More especific conditions
+    $conditionSQL = "AND actiu = 'S'";
+
+    // Case 1: query set -> search in table 
     if($query!==null && $abc==null) {
-      $db->query("$selectSQL WHERE tsv @@ plainto_tsquery(:query) $tagsSQL $orderSQL $limitSQL");
+      $db->query("$selectSQL WHERE tsv @@ plainto_tsquery(:query) $conditionSQL $tagsSQL $orderSQL $limitSQL");
       $db->bind(":query", $query.'%');
     }
-    // Case 3: abc selected, in that case is mandatory. If "Tots", get all table.
+    // Case 2: abc selected, in that case is mandatory. If "Tots", get all table
     if($abc!==null) {
       if ($abc=='Tots') {
-        $db->query("$selectSQL WHERE $field1 IS NOT NULL AND TRIM($field1) <> '' $tagsSQL $orderSQL $limitSQL");
+        $db->query("$selectSQL WHERE $field1 IS NOT NULL AND TRIM($field1) <> '' $conditionSQL $tagsSQL $orderSQL $limitSQL");
       } else {
-        $db->query("$selectSQL WHERE LOWER($field1) LIKE :abc $tagsSQL $orderSQL $limitSQL");
+        $db->query("$selectSQL WHERE LOWER($field1) LIKE :abc $conditionSQL $tagsSQL $orderSQL $limitSQL");
         $db->bind(":abc", $abc.'%');
       }
     }
@@ -126,28 +156,4 @@
       $db->bind(':offset', $offset);
       return $db->resultSet();
     }
-  }
-
-  /* TagList indicates the field of the tag selected, but the value of it (the 
-  actual valor of filtering) is inside $_GET with the key of tag type.
-
-  This function, recieves the tagType string (concat array) and returns
-  */
-  function prepareTags($tagList) {
-
-    $tagField = explode(",",$tagList); 
-    $tagArray = [];
-    $tagQuery = '';
-
-    foreach ($tagField as &$field) {
-      $valor = $_GET[$field];
-      $tagArray[$field] = $valor;
-
-      if($valor=='null') {
-        $tagQuery .= "AND $field is null ";
-      } else {
-        $tagQuery .= "AND $field LIKE '$_GET[$field]' ";
-      }
-    }
-    return [$tagArray,$tagQuery];
   }

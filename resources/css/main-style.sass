@@ -26,25 +26,21 @@
   src: url("../fonts/Oswald/Oswald-Regular.ttf")
   font-weight: 400
 
-
 @font-face
   font-family: "Oswald"
   src: url("../fonts/Oswald/Oswald-Bold.ttf")
   font-weight: 700
-
 
 @font-face
   font-family: "Oswald"
   src: url("../fonts/Oswald/Oswald-Light.ttf")
   font-weight: 300
 
-
 /*Roboto*/
 @font-face
   font-family: "Droid Sans"
   src: url("../fonts/Droid_Sans/DroidSans.ttf")
   font-weight: 400
-
 
 @font-face
   font-family: "Droid Sans"
@@ -66,10 +62,15 @@ h1, h2, h3
 
 .navbar-brand
   color: #e8554e
+  height: auto
   &:hover, &:visited
     color: #e8554e
   &:hover
     text-decoration: underline
+  img
+    display: inline-block
+    width: 50px
+    height: auto
 
 .btn-primary
   background-color: #e8554e
@@ -96,32 +97,36 @@ h1, h2, h3
   color: #fff
 
 /* Search Navbar */
-
-.navbar-search 
-  position: relative
+.navbar-aside 
   padding: 10px 0px
   float: right
-  .navbar-icon-search
-    position: absolute
-    top: 17px
-    left: 11px
-    font-size: 20px
-    color: #7a7a7a
-  input
-    &[type="search"]
-      padding-left: 33px
-      background-color: #353535
-      border: 2px solid #222
-      color: #fff
-      text-transform: none
-      width: 180px
-      height: 34px
-      border-radius: 25px
-      outline: none
-    &[type="submit"]
-      display: none
-    &:focus, &:visited
+  .navbar-button
+    position: relative
+    display: inline-block
+    padding: 5px 15px 5px 30px
+    background-color: #353535
+    border: 2px solid #222
+    color: #a9a9a9
+    text-transform: none
+    height: 34px
+    border-radius: 25px
+    outline: none
+    &:hover, &:active, &:focus
+      color: #a9a9a9
+      text-transform: normal
+      text-decoration: none
       border: 2px solid #7a7a7a
+    &:before
+      content: "\f041"
+      font-family: FontAwesome
+      font-size: 20px
+      font-style: normal
+      font-weight: normal
+      position: absolute
+      top: 1px
+      left: 10px
+      font-size: 20px
+      color: #7a7a7a
 
 /* Search Gazeetter */
 
@@ -276,3 +281,4 @@ button.disabled
   a.btn
     margin-bottom: 5px
     margin-right: 5px
+

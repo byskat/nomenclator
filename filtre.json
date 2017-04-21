@@ -40,16 +40,4 @@
 			"nom": "S.R."
 		}
 	]
-}, {
-	"camp": "actiu",
-	"nom": "Estat",
-	"filtres": [
-		{
-			"valor": "S",
-			"nom": "Actiu"
-		}, {
-			"valor": "N",
-			"nom": "Inactiu"
-		}
-	]
 }]

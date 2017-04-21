@@ -52,11 +52,16 @@ h1, h2, h3 {
 
 /* Bootstrap overide */
 .navbar-brand {
-  color: #e8554e; }
+  color: #e8554e;
+  height: auto; }
   .navbar-brand:hover, .navbar-brand:visited {
     color: #e8554e; }
   .navbar-brand:hover {
     text-decoration: underline; }
+  .navbar-brand img {
+    display: inline-block;
+    width: 50px;
+    height: auto; }
 
 .btn-primary {
   background-color: #e8554e;
@@ -83,30 +88,36 @@ h1, h2, h3 {
   color: #fff; }
 
 /* Search Navbar */
-.navbar-search {
-  position: relative;
+.navbar-aside {
   padding: 10px 0px;
   float: right; }
-  .navbar-search .navbar-icon-search {
-    position: absolute;
-    top: 17px;
-    left: 11px;
-    font-size: 20px;
-    color: #7a7a7a; }
-  .navbar-search input[type="search"] {
-    padding-left: 33px;
+  .navbar-aside .navbar-button {
+    position: relative;
+    display: inline-block;
+    padding: 5px 15px 5px 30px;
     background-color: #353535;
     border: 2px solid #222;
-    color: #fff;
+    color: #a9a9a9;
     text-transform: none;
-    width: 180px;
     height: 34px;
     border-radius: 25px;
     outline: none; }
-  .navbar-search input[type="submit"] {
-    display: none; }
-  .navbar-search input:focus, .navbar-search input:visited {
-    border: 2px solid #7a7a7a; }
+    .navbar-aside .navbar-button:hover, .navbar-aside .navbar-button:active, .navbar-aside .navbar-button:focus {
+      color: #a9a9a9;
+      text-transform: normal;
+      text-decoration: none;
+      border: 2px solid #7a7a7a; }
+    .navbar-aside .navbar-button:before {
+      content: "";
+      font-family: FontAwesome;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: normal;
+      position: absolute;
+      top: 1px;
+      left: 10px;
+      font-size: 20px;
+      color: #7a7a7a; }
 
 /* Search Gazeetter */
 .tagsinput-container {
@@ -204,6 +215,21 @@ h1, h2, h3 {
     font-style: normal;
     font-weight: normal;
     text-decoration: inherit; }
+.gazetteer-search .loading:before {
+  animation: loading 0.5s forwards, spin 1s infinite; }
+@keyframes loading {
+  from {
+    color: inherit; }
+  50% {
+    color: #fff; }
+  to {
+    content: "";
+    color: #e8554e; } }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
 .gazetteer-search .filter-container {
   position: relative; }
   .gazetteer-search .filter-container .gazetteer-icon-filter, .gazetteer-search .filter-container .gazetteer-icon-indicator {
@@ -314,16 +340,17 @@ h1, h2, h3 {
       right: 10px; }
     .view .modal-header .location-map, .view .modal-header .extend-map {
       bottom: 10px;
-      width: 30px;
       height: 30px;
-      padding: 5px 0;
+      padding: 5px 11px;
       background-color: #e8554e;
       border-radius: 50px;
       text-align: center; }
+      .view .modal-header .location-map i, .view .modal-header .extend-map i {
+        padding-right: 5px; }
     .view .modal-header .location-map {
       right: 10px; }
     .view .modal-header .extend-map {
-      right: 47px; }
+      right: 158px; }
   .view .modal-body {
     padding: 10px 15px; }
     .view .modal-body .iframe-container {

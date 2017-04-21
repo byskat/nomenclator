@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ca">
 <head>
   <title>Nomenclàtor</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,23 +17,24 @@
 <body>
   <nav class="navbar">
     <div class="container">
-      <a class="navbar-brand" target="_blank" href="http://www.girona.cat">Ajuntament de Girona</a>
-      <form class="navbar-search" method="get" role="search">
-        <span class="fa fa-search navbar-icon-search"></span>
-        <input type="search" name="s" placeholder="Cerca en el lloc ...">
-        <input type="submit" value="Search">
-      </form>
+      <a class="navbar-brand" href="http://www.girona.cat" target="_blank">
+      <!--<img src="resources/img/logo.png">-->
+      Ajuntament de Girona</a>
+      <div class="navbar-aside">
+        <a class="navbar-button" href="http://www.girona.cat/planol" target="_blank">Mapa de Girona</a>
+      </div>
     </div>
   </nav>
 
   <div class="jumbotron">
     <div class="container">
       <h1>Nomenclàtor de Girona</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.</p>
-      <p><a class="btn btn-primary btn-lg" href="+info.php" role="button">Comisió del Nomenclàtor »</a></p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+      iusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad 
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat.</p>
+      <p><a class="btn btn-primary btn-lg" href="+info.php" role="button">
+      Comisió del Nomenclàtor »</a></p>
     </div>
   </div>
 
@@ -72,7 +73,7 @@
       <div class="col-md-12">
         <section class="abc-header">
           <div class="col-md-8 no-padding">
-            <h1 class="major-letter"><span id="q">Tots</span> <span class="filterSymbol"></span> <span id="tag" class="filterTag"></span> <span class="letter-count"><span id="num">? resultats</span></span></h1>
+            <h2 class="major-letter"><span id="q">Tots</span> <span class="filterSymbol"></span> <span id="tag" class="filterTag"></span> <span class="letter-count"><span id="num">? resultats</span></span></h1>
           </div>
           <nav id="paginator" class="text-right col-md-4 no-padding">
             <ul class="pagination custom-pagination">
@@ -89,7 +90,7 @@
                 <button id="next" class="page-link">></button>
               </li>
               <li class="page-item pg_last">
-                <button id="last" val="1" class="page-link">>></button>
+                <button id="last" data-last="1" class="page-link">>></button>
               </li>
             </ul>
           </nav>
@@ -107,8 +108,11 @@
           <div class="modal-header">
             <h3>Sub header</h3><h2>Header</h2>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
-            <a id="extend_map" class="location-map" target="_blank" href=""><i class="fa fa-map-marker" aria-hidden="true"></i></a>
-            <a class="extend-map" target="_blank" href="http://www.girona.cat/planol/"><i class="fa fa-map-o" aria-hidden="true"></i></a>
+            <a id="extend_map" class="location-map" target="_blank" href="">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>Obrir localització
+            </a>
+            <a class="extend-map" target="_blank" href="http://www.girona.cat/planol/"> <i class="fa fa-map-o" aria-hidden="true"></i>Obrir plànol
+            </a>
           </div>
           <div class="modal-body">
             <div class="col-md-4 no-padding">
@@ -136,7 +140,7 @@
 
     <input id="pag" type="hidden" name="pag" value="1">
   </form>
-  
+ 
   </div> <!-- /container -->
   <footer class="container">
     <div class="col-md-12 no-padding">
@@ -155,28 +159,3 @@
 
 </body>
 </html>
-
-
-
-<!--
-  <nav id="pg" class="text-right col-md-4 no-padding">
-    <ul class="pagination custom-pagination">
-      <li class="page-item pg_first">
-        <a class="page-link">&lt;&lt;</a>
-      </li>
-      <li class="page-item pg_prev">
-        <a class="page-link">&lt;</a>
-      </li>
-      <li class="page-item pg_stat">
-        <a class="page-link" disabled="disabled">1 de 1</a>
-      </li>
-      <li class="page-item pg_next">
-        <a class="page-link">></a>
-      </li>
-      <li class="page-item pg_last">
-        <a class="page-link">>></a>
-      </li>
-    </ul>
-    <div id="pg_data" data-current="1" data-limit="1">
-  </nav>
--->

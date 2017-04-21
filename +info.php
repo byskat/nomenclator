@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ca">
 <head>
   <title>Nomenclàtor</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=charset=UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="description" content="" />
   <meta name="keywords" content="" />
   <meta name="robots" content="index,follow" />
@@ -19,12 +19,12 @@
 <body>
   <nav class="navbar">
     <div class="container">
-      <a class="navbar-brand" target="_blank" href="http://www.girona.cat">Ajuntament de Girona</a>
-      <form class="navbar-search" itemscope="" method="get" action="" role="search">
-        <span class="fa fa-search navbar-icon-search"></span>
-        <input itemprop="query-input" type="search" name="s" placeholder="Cerca en el lloc ...">
-        <input type="submit" value="Search">
-      </form>
+      <a class="navbar-brand" href="http://www.girona.cat" target="_blank">
+      <!--<img src="resources/img/logo.png">-->
+      Ajuntament de Girona</a>
+      <div class="navbar-aside">
+        <a class="navbar-button" href="http://www.girona.cat/planol" target="_blank">Mapa de Girona</a>
+      </div>
     </div>
   </nav>
 
@@ -36,7 +36,7 @@
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat.</p>
-      <p><a class="btn btn-primary btn-lg" href="index.php" role="button">« Tornar al Nomenclàtor</a></p>
+      <p><a class="btn btn-primary btn-lg" href="/nomenclator" role="button">« Tornar al Nomenclàtor</a></p>
     </div>
   </div>
 

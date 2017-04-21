@@ -1,101 +1,98 @@
 $(function () {
+    "use strict";
 
-  // Variable to hold requests
-  var request;
+    //Draw the content of the filter popover
+    tagDraw("filtre.json", "#tag-popover .popover-content");
 
-  //Draw the content of the filter popover
-  tagDraw("filtre.json","#tag-popover .popover-content");
-  
-  // Load data for first time
-  updateGazetteer();
+    // Load data for first time
+    updateGazetteer();
 
-  abcGeneration('.alphabet-filter');
+    abcGeneration(".alphabet-filter");
 
-  //HANDLERS
+    //HANDLERS
 
-  $('#filter-indicator').on('click', function(e) {
-    event.preventDefault();
-    tagRemove(this);
-  });
+    $("#filter-indicator").on("click", function (e) {
+        e.preventDefault();
+        tagRemove(this);
+    });
 
-  $('#filter-button').on('click', function(e) {
-    $(this).toggleClass('active');
-    $('#tag-popover').stop().slideToggle("500", "linear", "true");
-  });
-  
-  //Dissmisable filter popover
-  $(window).click(function() {
-    if($('#tag-popover').is(':visible')) {
-      $('#filter-button').trigger('click');
-    }
-  });
-  $('#tag-popover, #filter-button').click(function(event){
-    event.stopPropagation();
-  });
+    $("#filter-button").on("click", function () {
+        $(this).toggleClass("active");
+        $("#tag-popover").stop().slideToggle("500", "linear", "true");
+    });
 
-  /* Request handlers */
+    //Dissmisable filter popover
+    $(window).click(function () {
+        if ($("#tag-popover").is(":visible")) {
+            $("#filter-button").trigger("click");
+        }
+    });
+    $("#tag-popover, #filter-button").click(function (e) {
+        e.stopPropagation();
+    });
 
-  // Bind to the submit event to form
-  $("#search-form").submit(function(event){
-    // Prevent default posting of form
-    event.preventDefault();
-    updateGazetteer(this);
-  });
+    /* Request handlers */
 
-  // Handles more info button that loads specific info
-  $('body').on('click', '.modalButton', function() {
-    loadModal(this);
-  });
+    // Bind to the submit event to form
+    $("#search-form").submit(function (e) {
+        // Prevent default posting of form
+        e.preventDefault();
+        updateGazetteer(this);
+    });
 
-  /* Alphabet clicable text */
-  $('.alphabet-filter span').click(function(e) {
-  
-    // Remove previus active letter (visual) 
-    $('.alphabet-filter .active').removeClass('active');
-    
-    // Find previus checked item
-    $('.alphabet-filter input:checked').attr('checked', false);
-    
-    // Find new checkbox to be checked
-    $(this).find('input[type="radio"]').attr('checked', true);
-    
-    // Add active visuals to current checked span
-    $(this).addClass('active');
+    // Handles more info button that loads specific info
+    $("body").on("click", ".modalButton", function () {
+        loadModal(this);
+    });
 
-    //Reset pagination
-    pagination('reset');
+    /* Alphabet clicable text */
+    $(".alphabet-filter span").click(function () {
 
-    // Inmediate submit after click
-    $('#search-form').submit();
-  });
+        // Remove previus active letter (visual)
+        $(".alphabet-filter .active").removeClass("active");
 
-  //Pagination handlers
-  $("#first").click(function(e) {
-    pagination('first');
-  });
-  $("#last").click(function(e) {
-    pagination('last');
-  });
+        // Find previus checked item
+        $(".alphabet-filter input:checked").attr("checked", false);
 
-  $("#next").click(function(e) {
-    pagination('add');
-  });
-  $("#prev").click(function(e) {
-    pagination('sub');
-  });
+        // Find new checkbox to be checked
+        $(this).find("input[type='radio']").attr("checked", true);
 
-  // Intro in searchbar, if contains something reset abc and pagination.
-  $('#queryinput').keypress(function (e) {
-    if (e.which == 13 && $(this).val() != '') {
-      e.preventDefault();
+        // Add active visuals to current checked span
+        $(this).addClass("active");
 
-      // Unset alphabet selection
-      $('.alphabet-filter .active').removeClass('active');
-      $('.alphabet-filter input:checked').attr('checked', false);
-      
-      $('#search-form').submit();
-      //updateGazetteer(this);
-    }
-  });
+        //Reset pagination
+        pagination("reset");
 
+        // Inmediate submit after click
+        $("#search-form").submit();
+    });
+
+    //Pagination handlers
+    $("#first").click(function () {
+        pagination("first");
+    });
+    $("#last").click(function () {
+        pagination("last");
+    });
+
+    $("#next").click(function () {
+        pagination("add");
+    });
+    $("#prev").click(function () {
+        pagination("sub");
+    });
+
+    // Intro in searchbar, if contains something reset abc and pagination.
+    $("#queryinput").keypress(function (e) {
+        if (e.which === 13 && $(this).val() !== "") {
+            e.preventDefault();
+
+            // Unset alphabet selection
+            $(".alphabet-filter .active").removeClass("active");
+            $(".alphabet-filter input:checked").attr("checked", false);
+
+            $("#search-form").submit();
+            //updateGazetteer(this);
+        }
+    });
 });
