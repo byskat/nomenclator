@@ -123,8 +123,5 @@
   <script type="text/javascript" src="resources/vendor/jquery-3.1.1.min.js"></script>
   <script type="text/javascript" src="resources/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
-  <!-- Custom JS -->
-  <script src="resources/js/main-script.js"></script>
-
 </body>
 </html>

@@ -1,43 +1,23 @@
-[{
-	"camp": "codi_tipus_via",
-	"nom": "Vies",
-	"filtres": [
-		{
-			"valor": "CR",
-			"nom": "Carrer"
-		}, {
-			"valor": "PL",
-			"nom": "Plaça"
-		}, {
-			"valor": "PT",
-			"nom": "Passatge"
-		}, {
-			"valor": "RT",
-			"nom": "Rotonda"
-		}, {
-			"valor": "PJ",
-			"nom": "Pujada"
-		}, {
-			"valor": "PG",
-			"nom": "Passeig"
+{
+	"codi_tipus_via" : { 
+		"nom" : "Vies",
+		"valors" : {
+			"CR" : "Carrer",
+			"PL" : "Plaça",
+			"PT" : "Passatge",
+			"RT" : "Rotonda",
+			"PJ" : "Pujada",
+			"PG" : "Passeig"
 		}
-	]
-}, {
-	"camp": "data_variacio",
-	"nom": "Anys",
-	"filtres": [
-		{
-			"valor": "2001%",
-			"nom": "2001"
-		}, {
-			"valor": "2002%",
-			"nom": "2002"
-		}, {
-			"valor": "2012%",
-			"nom": "2012"
-		}, {
-			"valor": "null",
-			"nom": "S.R."
+	},
+    "canvi_any" : { 
+		"nom" : "Any",
+		"valors" : {
+			"2001" : "2001",
+			"2002" : "2002",
+			"2012" : "2012",
+			"2001|2002" : "2001 i 2002",
+			"null" : "S.R."
 		}
-	]
-}]
+	}
+}

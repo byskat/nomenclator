@@ -3,6 +3,7 @@
 <head>
   <title>Nomenclàtor</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="" />
   <meta name="keywords" content="" />
   <meta name="robots" content="index,follow" />
@@ -44,18 +45,18 @@
     <div class="row">     
       <div class="col-md-12">
         <div class="gazetteer-search">
-          <span class="gazetteer-icon-search"></span>
+          <span class="icon-search"></span>
           <div class="filter-container">
-            <button id="filter-indicator" class="gazetteer-icon-indicator"></button>
-            <button id="filter-button" type="button" class="gazetteer-icon-filter"></button>
+            <button id="filter-indicator" class="icon-indicator"></button>
+            <button id="filter-button" type="button" class="icon-filter"></button>
             <div id="tag-popover" class="popover fade bottom in" role="tooltip">
               <div class="arrow"></div>
               <h3 class="popover-title">Filtre</h3>
               <div class="popover-content"></div>
             </div>
           </div>
-          <div class="tagsinput-container">
-            <input id="queryinput" class="bootstrap-queryinput" type="text" name="q" placeholder="Cerca general de carrers ..." />
+          <div class="querybar-container">
+            <input id="queryinput" class="querybar" type="text" name="q" placeholder="Cerca general de carrers ..." />
             <input id="tagsinput" type="hidden" name="t">
           </div>
         </div>
@@ -73,7 +74,7 @@
       <div class="col-md-12">
         <section class="abc-header">
           <div class="col-md-8 no-padding">
-            <h2 class="major-letter"><span id="q">Tots</span> <span class="filterSymbol"></span> <span id="tag" class="filterTag"></span> <span class="letter-count"><span id="num">? resultats</span></span></h1>
+            <h2 class="major-letter"><span id="q">Tots</span> <span class="filterSymbol"></span> <span id="tag" class="filterTag"></span> <span class="letter-count"><span id="num">? resultats</span></span></h2>
           </div>
           <nav id="paginator" class="text-right col-md-4 no-padding">
             <ul class="pagination custom-pagination">
@@ -108,26 +109,26 @@
           <div class="modal-header">
             <h3>Sub header</h3><h2>Header</h2>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
-            <a id="extend_map" class="location-map" target="_blank" href="">
-              <i class="fa fa-map-marker" aria-hidden="true"></i>Obrir localització
-            </a>
-            <a class="extend-map" target="_blank" href="http://www.girona.cat/planol/"> <i class="fa fa-map-o" aria-hidden="true"></i>Obrir plànol
-            </a>
+            <div class="modal-aside">
+              <a id="extend_map" class="location-map" target="_blank" href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>Obrir localització
+              </a>
+              <a class="extend-map" target="_blank" href="http://www.girona.cat/planol/"> <i class="fa fa-map-o" aria-hidden="true"></i>Obrir plànol
+              </a>
+            </div>
           </div>
           <div class="modal-body">
             <div class="col-md-4 no-padding">
               <p><b>Any de modificació: </b><span id="data_variacio"></span></p>
+            </div>
+            <div class="col-md-4 no-padding">
               <p><b>Nom postal: </b><span id="nom_postal"></span></p>
             </div>
             <div class="col-md-4 no-padding">
-              <p><b>Tipus de carrer: </b><span id="tipus_car"></span></p>
-              <p><b>Nom normalitzat: </b><span id="nom_normalitzat"></span></p>
-            </div>
-            <div class="col-md-4 no-padding">
               <p><b>Codi: </b><span id="codi_car"></span></p>
-              <p><b>Actiu: </b><span id="actiu"></span></p>
             </div>
             <div class="col-md-12 no-padding">
+              <div id="observacions"></div>
               <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.</p>
             </div>
             <div class="iframe-container">

@@ -45,28 +45,6 @@ $(function () {
         loadModal(this);
     });
 
-    /* Alphabet clicable text */
-    $(".alphabet-filter span").click(function () {
-
-        // Remove previus active letter (visual)
-        $(".alphabet-filter .active").removeClass("active");
-
-        // Find previus checked item
-        $(".alphabet-filter input:checked").attr("checked", false);
-
-        // Find new checkbox to be checked
-        $(this).find("input[type='radio']").attr("checked", true);
-
-        // Add active visuals to current checked span
-        $(this).addClass("active");
-
-        //Reset pagination
-        pagination("reset");
-
-        // Inmediate submit after click
-        $("#search-form").submit();
-    });
-
     //Pagination handlers
     $("#first").click(function () {
         pagination("first");
@@ -89,10 +67,9 @@ $(function () {
 
             // Unset alphabet selection
             $(".alphabet-filter .active").removeClass("active");
-            $(".alphabet-filter input:checked").attr("checked", false);
+            $(".alphabet-filter input:checked").prop("checked", false);
 
             $("#search-form").submit();
-            //updateGazetteer(this);
         }
     });
 });

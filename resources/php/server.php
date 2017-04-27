@@ -8,7 +8,7 @@
   isset($_GET['id']) && !empty($_GET['id'])? $codi = $_GET['id'] : $codi = null;
 
   if($codi!==null) {
-    $db->query("SELECT * FROM carrerer_1 WHERE codi_car = :codi");
+    $db->query("SELECT * FROM carrerer WHERE codi_car = :codi");
     $db->bind(":codi", $codi);
     $db->close();
 
@@ -125,7 +125,7 @@
         if($value=='null') {
           $tagsSQL .= "AND $tag is null ";
         } else {
-          $tagsSQL .= "AND $tag LIKE '$_GET[$tag]' " ;
+          $tagsSQL .= "AND CAST($tag as VARCHAR) SIMILAR TO '$_GET[$tag]' " ;
         }
       }
     }

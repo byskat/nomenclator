@@ -1,21 +1,15 @@
 /*
- *	
- *	Color Palette - https://coolors.co/e8554e-222222-353535-cccccc-ffffff
- *	
- *	#e8554e 
- *	#222
- *	#353535
- *	#ccc
- *	
- *	#eee
+ *  
+ *  Color Palette - https://coolors.co/e8554e-222222-353535-cccccc-ffffff
+ *  
+ *  Fonts
  *
- *	#fff
- *
- *
- *	Fonts
- *
- *	Oswald - Header
- *	Droid Sans - Body
+ *  Oswald - Header
+ *  Droid Sans - Body
+ */
+
+/*Mixins*/
+@import css3-mixins
 
 /*FontAwesome*/
 @import url('../fonts/font-awesome-4.7.0/css/font-awesome.min.css')
@@ -25,6 +19,7 @@
   font-family: "Oswald"
   src: url("../fonts/Oswald/Oswald-Regular.ttf")
   font-weight: 400
+//+font-face("Oswald","../fonts/Oswald/Oswald-Regular.ttf")
 
 @font-face
   font-family: "Oswald"
@@ -53,88 +48,82 @@ body
 h1, h2, h3
   font-family: "Oswald", sans-serif
 
+$main_color: #e8554e 
+$secondary_color: #222222
+$tertiary_color: #ffffff
+
+$auxiliary_1: #353535
+$auxiliary_2: #7a7a7a
+
+$auxiliary_3: #a9a9a9
+$auxiliary_4: #dddddd
+
 /* Helper classes */
 
 .no-padding 
   padding: 0
-
-/* Bootstrap overide */
-
-.navbar-brand
-  color: #e8554e
-  height: auto
-  &:hover, &:visited
-    color: #e8554e
-  &:hover
-    text-decoration: underline
-  img
-    display: inline-block
-    width: 50px
-    height: auto
-
-.btn-primary
-  background-color: #e8554e
-  border-color: #e7544d
-  color: #fff
-  &:hover, &:active ,&:visited
-    background-color: #e8554e !important
-    border-color: #e7544d !important
-    color: #fff !important
-
-.btn-secondary
-  background-color: #ddd
-  color: #000
+  
+/* Navbar */
 
 .navbar
   margin-bottom: 0
-  border-radius: 0
-  background-color: #222
-  color: #fff
+  +border-radius(0)
+  background-color: $secondary_color
+  color: $tertiary_color
+  .navbar-brand
+    color: $main_color
+    height: auto
+    &:hover, &:visited
+      color: $main_color
+    &:hover
+      text-decoration: underline
+    img
+      display: inline-block
+      width: 50px
+      height: auto
+  .navbar-aside 
+    padding: 10px 0px
+    float: right
+    .navbar-button
+      position: relative
+      display: inline-block
+      padding: 5px 15px 5px 30px
+      background-color: $auxiliary_1
+      border: 2px solid $secondary_color
+      color: $auxiliary_3
+      text-transform: none
+      height: 34px
+      +border-radius(25px)
+      outline: none
+      &:hover, &:active, &:focus
+        color: $auxiliary_2
+        text-transform: normal
+        text-decoration: none
+        border: 2px solid $auxiliary_2
+      &:before
+        content: "\f041"
+        font-family: FontAwesome
+        font-size: 20px
+        font-style: normal
+        font-weight: normal
+        position: absolute
+        top: 1px
+        left: 10px
+        color: $auxiliary_2
+
+/* Header */
 
 .jumbotron
   padding-top: 10px
-  background-color: #222
-  color: #fff
-
-/* Search Navbar */
-.navbar-aside 
-  padding: 10px 0px
-  float: right
-  .navbar-button
-    position: relative
-    display: inline-block
-    padding: 5px 15px 5px 30px
-    background-color: #353535
-    border: 2px solid #222
-    color: #a9a9a9
-    text-transform: none
-    height: 34px
-    border-radius: 25px
-    outline: none
-    &:hover, &:active, &:focus
-      color: #a9a9a9
-      text-transform: normal
-      text-decoration: none
-      border: 2px solid #7a7a7a
-    &:before
-      content: "\f041"
-      font-family: FontAwesome
-      font-size: 20px
-      font-style: normal
-      font-weight: normal
-      position: absolute
-      top: 1px
-      left: 10px
-      font-size: 20px
-      color: #7a7a7a
-
-/* Search Gazeetter */
-
-@import inputBar
-
-/* Modal style */
-
-@import modalView
+  background-color: $secondary_color
+  color: $tertiary_color
+  .btn-primary
+    background-color: $main_color
+    border: 0
+    color: $tertiary_color
+    &:hover, &:active ,&:visited
+      background-color: $main_color !important
+      color: $tertiary_color !important
 
 /* ABC filter */
 
@@ -154,77 +143,75 @@ h1, h2, h3
   input[type=radio]
     display: none
   .active, 
-    color: #fff
-    background-color: #353535
-    border-radius: 30px
+    color: $tertiary_color
+    background-color: $auxiliary_1
+    +border-radius(30px)
     text-decoration: underline
     text-transform: uppercase
 
 /* ABC results */
 
 .abc-header
-  border-bottom: 1px solid #222
-
-.major-letter
-  font-size: 60px
-  text-transform: capitalize
-  margin-bottom: 0
-  //border-bottom: 1px solid #222
-  & .filterSymbol
-    color: #e8554e
-  & .filterTag
-    color: #7a7a7a
-    font-size: 45px
-
-.letter-count
-  font-family: "Droid Sans", sans-serif
-  font-weight: normal
-  font-size: 14px
-  text-transform: lowercase
-  color: #353535
+  border-bottom: 1px solid $secondary_color
+  .major-letter
+    font-size: 60px
+    text-transform: capitalize
+    margin-bottom: 0
+    color: $secondary_color
+    & .filterSymbol
+      color: $main_color
+    & .filterTag
+      color: $auxiliary_2
+      font-size: 45px
+  .letter-count
+    font-family: "Droid Sans", sans-serif
+    font-weight: normal
+    font-size: 14px
+    text-transform: lowercase
+    color: $auxiliary_1
 
 .abc-results 
-  -moz-column-width: 25em
-  -webkit-column-width: 25em
-  -moz-column-gap: 1em
-  -webkit-column-gap: 1em 
+  //-moz-column-width: 25em
+  //-webkit-column-width: 25em
+  //-moz-column-gap: 1em
+  //-webkit-column-gap: 1em 
   & > div
     display: inline-block
-    width: 100% 
+    //width: 100%
     float: none
     h2
+      color: $secondary_color
       margin-top: 5px
       &:after
         content: "."
-        color: #e8554e
+        color: $main_color
         font-family: "Droid Sans", sans-serif
         font-size: 32px
     h3
-      color: #7a7a7a
+      color: $auxiliary_2
       margin-top: 20px
       margin-bottom: 5px
       font-size: 22px
     span
-      color: #7a7a7a
+      color: $auxiliary_2
       font-family: "Droid Sans", sans-serif
       font-weight: normal
       font-size: 14px
       margin-right: 5px
+  .no-items
+    margin: 10px 0
 
-.no-items
-  margin: 10px 0
+/* Pagination */
 
 .custom-pagination 
   margin: 30px 0 10px 0
   > li
     &:first-child > button
       margin-left: 0
-      border-top-left-radius: 4px
-      border-bottom-left-radius: 4px
+      +border-radius-separate(4px, 0, 4px, 0)
     &:last-child > button
       margin-right: 0
-      border-top-right-radius: 4px
-      border-bottom-right-radius: 4px
+      +border-radius-separate(0, 4px, 0, 4px)
     > button
       position: relative
       float: left
@@ -232,11 +219,11 @@ h1, h2, h3
       padding: 6px 12px
       margin-left: -1px
       line-height: 1.42857143
-      color: #222
-      border-color: #eee
+      color: $secondary_color
+      border-color: $tertiary_color
       text-decoration: none
-      background-color: #fff
-      border: 1px solid #ddd
+      background-color: $tertiary_color
+      border: 1px solid $auxiliary_4
       outline: none
       -webkit-touch-callout: none
       -webkit-user-select: none
@@ -246,24 +233,24 @@ h1, h2, h3
       user-select: none
       &:hover
         z-index: 2
-        color: #222
-        background-color: #eee
-        border-color: #ddd 
+        color: $secondary_color
+        background-color: $tertiary_color
+        border-color: $auxiliary_4 
       &.disabled
         cursor: default
-        background-color: #ddd
+        background-color: $auxiliary_4
 
 
 button.disabled
   &, &:hover, &:focus
     cursor: default
-    background-color: #ddd
+    background-color: $auxiliary_4
 
 .disabled 
   ul > li > button
     &, &:hover, &:focus
       cursor: default
-      background-color: #ddd
+      background-color: $auxiliary_4
 
 // More Info
 
@@ -271,10 +258,11 @@ button.disabled
   margin-bottom: 10px
 
 .previous
-  font-size: 45px
-  color: #ccc
+  font-size: .8em
+  color: $auxiliary_2
+
 .style-slash
-  color: #e8554e
+  color: $main_color
   margin: 0 10px
 
 .documents
@@ -282,3 +270,5 @@ button.disabled
     margin-bottom: 5px
     margin-right: 5px
 
+@import inputBar
+@import modalView
