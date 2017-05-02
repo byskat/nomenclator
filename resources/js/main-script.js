@@ -13,7 +13,7 @@ $(function () {
 
     $("#filter-indicator").on("click", function (e) {
         e.preventDefault();
-        tagRemove(this);
+        tagRemove();
     });
 
     $("#filter-button").on("click", function () {
@@ -42,7 +42,7 @@ $(function () {
 
     // Handles more info button that loads specific info
     $("body").on("click", ".modalButton", function () {
-        loadModal(this);
+        loadModal($(this).attr("data-id"));
     });
 
     //Pagination handlers

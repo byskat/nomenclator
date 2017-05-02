@@ -2,7 +2,11 @@ var filterList = {};
 
 /* -- Functions -- */
 
-// Simple function that shows/hides the loader in the searchbar
+/**
+ * Simple function that shows/hides the loader in the searchbar.
+ * @param  {JQuery} elm Element to apply loading class.
+ * @param  {String} show or hide
+ */
 function loader(elm, state) {
     "use strict";
 
@@ -16,18 +20,23 @@ function loader(elm, state) {
     }
 }
 
-// MODEL LOAD
-function loadModal(elm) {
+/**
+ * Modal load with specific data, it makes the ajax request and fills the
+ * modal.
+ * @param  {int} id Pass the id to make the specific request.
+ * @return {[object]} request Ajax request.
+ */
+function loadModal(id) {
     "use strict";
 
+    // Toggle the visuals to show the modal
     $("#view-modal").modal("toggle");
-    var itemId = $(elm).attr("data-id");
 
     // Fire off the request to /server.php
     var request = $.ajax({
         url: "resources/php/server.php",
         type: "get",
-        data: {"id": itemId}
+        data: {"id": id}
     });
 
     // Callback handler that will be called on success
@@ -84,9 +93,17 @@ function loadModal(elm) {
             errorThrown
         );
     });
+
+    return request;
 }
 
-// SEARCH FORM
+/**
+ * Main function, it recieves the form with data to make a ajax request to 
+ * server and draws the output. If no form is passed it will get all items.
+ * If error, it will give message. 
+ * @param  {JQuery} [form] 
+ * @return {[object]} request Ajax request.
+ */
 function updateGazetteer(form) {
     "use strict";
 
@@ -211,7 +228,8 @@ function updateGazetteer(form) {
         }
         $("#resultsContainer").html(html);
 
-        // Total disabler
+        // Pagination control
+        // Total disabler of the pagination in case we have 1 or less pages.
         if (response.lim <= 1) {
             $("#paginator").addClass("disabled");
             $("#paginator").find("button").attr("disabled", true);
@@ -220,7 +238,8 @@ function updateGazetteer(form) {
             $("#paginator").find("button").attr("disabled", false);
         }
 
-        // Partial Disabler
+        // Partial Disabler of the pagination when we stay at the first 
+        // and last pages.
         if (response.pag === response.lim) {
             $("#next, #last").addClass("disabled");
             $("#next, #last").attr("disabled", true);
@@ -265,6 +284,11 @@ function updateGazetteer(form) {
     return request;
 }
 
+/**
+ * Manages the value of the current page in the form to pass correctly the 
+ * selected page.
+ * @param  {String} action add|sub|first|reset|last 
+ */
 function pagination(action) {
     "use strict";
 
@@ -295,7 +319,10 @@ function pagination(action) {
     }
 }
 
-// Generation of abc filter
+/**
+ * Generation of the abc filter
+ * @param  {Jquery} elm Element to atach the abc selector
+ */
 function abcGeneration(elm) {
     "use strict";
 
@@ -316,7 +343,10 @@ function abcGeneration(elm) {
     $(elm).append(html);
 }
 
-/* Alphabet clicable text */
+/**
+ * It selects the passed element and submits the form.
+ * @param  {JQuery} elm Element activated
+ */
 function abcActivation(elm) {
     "use strict";
 
@@ -341,7 +371,11 @@ function abcActivation(elm) {
     $("#search-form").submit();
 }
 
-// New tag filler
+/**
+ * Reads the filter configuration file and draws it in the selected element.
+ * @param  {String} filepath Give the path of the filter object.
+ * @param  {JQuery} Element to append the filter.
+ */
 function tagDraw(filepath, elm) {
     "use strict";
 
@@ -366,19 +400,27 @@ function tagDraw(filepath, elm) {
     });
 }
 
-function tagRemove(elm) {
+/**
+ * Removes the visuals and the actual tags from the form, and submit.
+ */
+function tagRemove() {
     "use strict";
 
     $("#tagsinput").val("");
     $("#tag-popover").find("input[type='radio']").attr("checked", false);
     $("#tag-popover").find("span").removeClass("active");
 
-    $(elm).removeClass("active");
+    $("#filter-indicator").removeClass("active");
 
     // Inmediate submit after click
     $("#search-form").submit();
 }
 
+/**
+ * It activates visually and in the form the tag selected, and it submits the
+ * form.
+ * @param  {JQuery} elm Tag to activate.
+ */
 function tagActivation(elm) {
     "use strict";
 

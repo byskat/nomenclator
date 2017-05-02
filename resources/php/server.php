@@ -7,6 +7,7 @@
   // MODAL (more info)
   isset($_GET['id']) && !empty($_GET['id'])? $codi = $_GET['id'] : $codi = null;
 
+  // If id detected, then we only pass the specific item and exit
   if($codi!==null) {
     $db->query("SELECT * FROM carrerer WHERE codi_car = :codi");
     $db->bind(":codi", $codi);
@@ -96,6 +97,19 @@
   echo json_encode($response);
   exit(0);
 
+  /**
+   * This function recieves the sent parameters, builds the query and it counts 
+   * or fetch the data matching the criteria. 
+   * @param  string $action count|select
+   * @param  object $db Connection object
+   * @param  string $query Word to search from the front
+   * @param  array[string]string $filter Contains the name and value of the
+   * field to filter.
+   * @param  string $abc Letter or 'Tots'
+   * @param  string [$limit] Total items to show at current page instance
+   * @param  string [$offset] Current number of the pagination
+   * @return object resultset or single Result of the query execution.
+   */
   function fetchData($action, $db, $query, $filter, $abc, $limit='', $offset='') {
 
     $fields = "*";
