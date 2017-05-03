@@ -109,17 +109,30 @@ A functions hi trobarem la major part del codi. Aquest es troba comentat (en ang
 
 ## PHP
 
-El PHP del projecte està dividit en dos fitxers, server.php i postgre.class.php més un tercer functions.php.
+El PHP del projecte està dividit en dos fitxers, server.php i postgre.class.php, incloent-hi també l'arxiu de configuració de la base de dades (ini).
 
-Els dos primers fitxers fan referencia al backend o server, que assumeix el rol d'API i per tant, pot ser separat del projecte (sempre que és [configuri](#base-de-dades) correctament. postgre.class es fa servir com intermediaria per utilitzar correctament la connexió de la base de dades. Ambdós fitxers són comentats (anglès).
-
-El fitxer functions conté únicament una funció que llegeix un directori i genera enllaços per a tots els documents trobats. És temporal, ja que s'ha d'utilitzar un gestor per suplir aquesta característica. S'utilitza únicament al fitxer +info.php.
+Els dos primers fitxers fan referencia al backend o server, que assumeix el rol d'API i per tant, pot ser [separat del projecte](#frontend--backend). postgre.class es fa servir com intermediaria per utilitzar correctament la connexió de la base de dades. Ambdós fitxers són comentats (anglès).
 
 ## Desplegament
 
-Per desplegar l'aplicació només cal tenir una instal·lació vàlida d'un servidor LAMP (WAMP o XAMPP) amb postgre i col·locar la carpeta del projecte a un directori públic (www/htdocs).
+Per desplegar l'aplicació tal com està al repositori només cal tenir una instal·lació vàlida d'un servidor LAMP (WAMP o XAMPP) amb postgre i col·locar la carpeta del projecte a un directori públic (www/htdocs).
 
 Un cop fet, s'ha de [configurar](#base-de-dades) l'accés a la base de dades.
+
+### Frontend / Backend
+
+És possible que es vulgui separar el frontend del backend; en aquest cas, per poder fer-ho s'ha de separar el contingut de resources/php/ i col·locar-lo al directori desitjat (i tingui accés a la base de dades i estigui [configurada](#base-de-dades)).
+També serà necessari actualitzar la localització del servidor al javascript (o, en aquest cas, frontend), modificant el valor de la variable 'serverURL' que es troba a la capçalera de functions.js.
+
+'''
+...
+// Where the data is requested.
+var serverURL = "nou/path/al/server.php";
+...
+'''
+
+Alhora, server.php ha de tenir accés a la classe adjunta postgre.class.php.
+
 ## Desenvolupat amb
 
 * [Bootstrap](http://getbootstrap.com/) - Frontend framework
