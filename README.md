@@ -115,7 +115,7 @@ Els dos primers fitxers fan referencia al backend o server, que assumeix el rol 
 
 ## Desplegament
 
-Per desplegar l'aplicació tal com està al repositori només cal tenir una instal·lació vàlida d'un servidor LAMP (WAMP o XAMPP) amb postgre i col·locar la carpeta del projecte a un directori públic (www/htdocs).
+Per desplegar l'aplicació tal com està al repositori només cal tenir una instal·lació vàlida d'un servidor web amb postgre i col·locar la carpeta del projecte a un directori públic (www/htdocs).
 
 Un cop fet, s'ha de [configurar](#base-de-dades) l'accés a la base de dades.
 
