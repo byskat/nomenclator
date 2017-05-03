@@ -1,4 +1,7 @@
+// Filter container.
 var filterList = {};
+// Where the data is requested.
+var serverURL = "resources/php/server.php";
 
 /* -- Functions -- */
 
@@ -34,7 +37,7 @@ function loadModal(id) {
 
     // Fire off the request to /server.php
     var request = $.ajax({
-        url: "resources/php/server.php",
+        url: serverURL,
         type: "get",
         data: {"id": id}
     });
@@ -122,7 +125,7 @@ function updateGazetteer(form) {
 
     // Fire off the request
     var request = $.ajax({
-        url: "resources/php/server.php",
+        url: serverURL,
         type: "get",
         data: serializedData
     });
