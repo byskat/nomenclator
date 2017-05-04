@@ -1,7 +1,0 @@
-[ { "id": 1 , "nom": "Carrer"       , "grup": "via"    },
-  { "id": 2 , "nom": "Plaça"        , "grup": "via"    },
-  { "id": 3 , "nom": "Jardí"        , "grup": "via"    },
-  { "id": 4 , "nom": "Nom d'Animal" , "grup": "tema"   },
-  { "id": 5 , "nom": "Nom de Dona"  , "grup": "tema"   },
-  { "id": 6 , "nom": "Segle XX"     , "grup": "temps"  }
-]
