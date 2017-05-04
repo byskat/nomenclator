@@ -115,7 +115,7 @@ Els dos primers fitxers fan referencia al backend o server, que assumeix el rol 
 
 ## Desplegament
 
-Per desplegar l'aplicació tal com està al repositori només cal tenir una instal·lació vàlida d'un servidor LAMP (WAMP o XAMPP) amb postgre i col·locar la carpeta del projecte a un directori públic (www/htdocs).
+Per desplegar l'aplicació tal com està al repositori només cal tenir una instal·lació vàlida d'un servidor web amb postgre i col·locar la carpeta del projecte a un directori públic (www/htdocs).
 
 Un cop fet, s'ha de [configurar](#base-de-dades) l'accés a la base de dades.
 
@@ -124,12 +124,12 @@ Un cop fet, s'ha de [configurar](#base-de-dades) l'accés a la base de dades.
 És possible que es vulgui separar el frontend del backend; en aquest cas, per poder fer-ho s'ha de separar el contingut de resources/php/ i col·locar-lo al directori desitjat (i tingui accés a la base de dades i estigui [configurada](#base-de-dades)).
 També serà necessari actualitzar la localització del servidor al javascript (o, en aquest cas, frontend), modificant el valor de la variable 'serverURL' que es troba a la capçalera de functions.js.
 
-'''
-...
-// Where the data is requested.
-var serverURL = "nou/path/al/server.php";
-...
-'''
+```
+  ...
+    // Where the data is requested.
+    var serverURL = "nou/path/al/server.php";
+  ...
+```
 
 Alhora, server.php ha de tenir accés a la classe adjunta postgre.class.php.
 
