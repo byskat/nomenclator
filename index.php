@@ -19,7 +19,7 @@
   <nav class="navbar">
     <div class="container">
       <a class="navbar-brand" href="http://www.girona.cat" target="_blank">
-      <!--<img src="resources/img/logo.png">-->
+      <img src="resources/img/logo.png">
       Ajuntament de Girona</a>
       <div class="navbar-aside">
         <a class="navbar-button" href="http://www.girona.cat/planol" target="_blank">Mapa de Girona</a>

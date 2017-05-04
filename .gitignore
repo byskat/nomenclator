@@ -51,5 +51,8 @@ Temporary Items
 # =========================
 
 *.txt
+resources/.sass-cache/*
+resources/.sass-cache/
 bkup
 resources/php/*.ini
+*.sassc
