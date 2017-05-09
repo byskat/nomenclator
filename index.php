@@ -35,7 +35,7 @@
       minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
       ea commodo consequat.</p>
       <p><a class="btn btn-primary btn-lg" href="+info.php" role="button">
-      Comisió del Nomenclàtor »</a></p>
+      Comissió del Nomenclàtor »</a></p>
     </div>
   </div>
 
