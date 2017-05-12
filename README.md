@@ -65,10 +65,10 @@ La clau de l'objecte que es passa a "valors" és el valor que es troba a la base
 ```
   ...
   "valors" : {
-    "home" 		: "Home",
-    "dona" 		: "Dona",
+    "home"	: "Home",
+    "dona"	: "Dona",
     "neutre" 	: "Neutre",
-    "home|dona" : "Mixte"  Com podem veure aqui
+    "home|dona"	: "Mixte"  Com podem veure aqui
   }
   ...
 ```
@@ -98,6 +98,24 @@ El nom de l'arxiu per defecte és "*web_umat_nomenclator.ini*", però es pot can
     $db = new Db("nom_nou.ini");
   ...
 ```
+
+### Base de Dades - Nous Valors
+
+En cas que s'afegeixin nous valors, o és faci una migració, s'ha de tenir en compte que la taula ha de contenir un camp especial que s'ha de generar per a cada nova addició. Es tracta del camp "tsv" que s'utilitza per a la cerca manual (cercador). Aquest camp és un [TSVECTOR](https://www.postgresql.org/docs/8.3/static/datatype-textsearch.html) que permet fer cerques de text més àgils. Però el valor del camp s'ha de generar, les següents comandes SQL:
+
+```
+  ALTER TABLE taula ADD COLUMN tsv TSVECTOR;		# Afegim la columna tsv
+  UPDATE taula SET tsv = to_tsvector(nom_indexar);	# Omplim les dades del camp tsv, convertint l'string (o text) que volguem a vector (en aquest cas, nom_indexar)
+  CREATE INDEX tsv_gin ON taula USING GIN(tsv);		# Creem un index GIN que utilitzarà el vector (key, posting list) per fer la cerca
+  
+  CREATE TRIGGER tr_tsv BEFORE INSERT OR UPDATE ON taula FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv', '', 'nom_indexar'); # Finalment, creem un trigger perquè automatitzi tot el procés
+```
+
+Informació obtinguda a [Antjanus](https://antjanus.com/blog/tutorials/using-postgresql-as-a-search-engine/
+) i [Lateral](https://blog.lateral.io/2015/05/full-text-search-in-milliseconds-with-postgresql/
+).
+
+
 
 ## Javascript
 
